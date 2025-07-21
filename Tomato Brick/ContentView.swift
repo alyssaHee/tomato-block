@@ -46,9 +46,12 @@ struct UnblockedView: View {
                     .aspectRatio(contentMode: .fit)
                     .padding(.horizontal, 40.0)
                     .padding(.bottom, 20.0)
+                
+                // tomato face
+                
                     
                 // drop down menu to choose mode
-                Menu(/*@START_MENU_TOKEN@*/"Menu"/*@END_MENU_TOKEN@*/) {
+                Menu("Default mode") {
                     /*@START_MENU_TOKEN@*/Text("Work Mode")/*@END_MENU_TOKEN@*/
                     /*@START_MENU_TOKEN@*/Text("School Mode")/*@END_MENU_TOKEN@*/
                     /*@START_MENU_TOKEN@*/Text("Sleep")/*@END_MENU_TOKEN@*/
@@ -57,9 +60,6 @@ struct UnblockedView: View {
                 .font(.IBMPlexMono(fontStyle: .headline))
                 .foregroundStyle(.black)
                 .border(.black, width: 1.0)
-                
-                
-                
                 
                 Spacer()
             }
@@ -74,22 +74,67 @@ struct UnblockedView: View {
                                     .frame(height: 30)
                                     .tint(Color(red: 0.67, green: 0.59, blue: 0.59))
                         }
-                    .padding(.top)
-                    .padding(.trailing)
+                    .padding([.top, .trailing])
                     }
             }
-            
-            
-                
-                    
-            
-    }
+        }
     }
 }
 
 struct SettingsView: View {
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
-        Text("Halloo")
+        ZStack() {
+            Color(red: 0.97, green: 0.96, blue: 0.96)
+                .ignoresSafeArea()
+            
+            VStack(alignment: .leading) {
+                Text("Settings")
+                    .font(.kodemono(fontStyle: .title))
+                    .multilineTextAlignment(.leading)
+                    .foregroundStyle(.black)
+                    //.textCase(.uppercase)
+                
+           
+                    Text("Modes")
+                        .font(.IBMPlexMono(fontStyle: .title3))
+                        .foregroundColor(.black)
+                        .multilineTextAlignment(.leading)
+                        .padding(.top, -3.0)
+                    
+                   
+                    
+                HStack() {
+                    VStack() {
+                        Image("happyTomato")
+                        Text("Default")
+                            .font(.IBMPlexMono(fontStyle: .body))
+                    }
+                    
+                    Image("addmodeTomato")
+                }
+                
+                Spacer()
+            }
+            .padding(.leading, 40.0)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            
+            
+            // back button
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(action: {
+                            dismiss()
+                        }) {
+                            Image("settingsExit")
+                        }
+                        .padding([.top, .trailing])
+                    }
+                }
+        }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
