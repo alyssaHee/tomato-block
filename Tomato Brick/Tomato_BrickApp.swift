@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct Tomato_BrickApp: App {
+    @StateObject private var appBlocker = AppBlocker()
+    @StateObject private var profileManager = ProfileManager()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TomatoView()
+                .environmentObject(appBlocker)
+                .environmentObject(profileManager)
         }
     }
 }

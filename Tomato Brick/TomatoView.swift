@@ -6,8 +6,30 @@
 //
 
 import SwiftUI
+import CoreNFC
+import FamilyControls
+import ManagedSettings
 
-struct ContentView: View {
+struct TomatoView: View {
+    // EnvironmentObject shares instance of ObservableObject class throughout views
+    @EnvironmentObject private var appBlocker: AppBlocker
+    @EnvironmentObject private var profileManager: ProfileManager
+    
+    // @StateObject is for managing reference types like classes unlike @State which manages simple variables
+    @StateObject private var nfcReader = NFCReader()
+    private let tagPhrase = "MATO"
+    
+    // @State is for managing local view-specific state
+    @State private var showWrongTagAlert = false
+    @State private var showCreateTagAlert = false
+    @State private var nfcWriteSuccess = false
+    
+    private var isBlocking : Bool {
+        get {
+            return appBlocker.isBlocking
+        }
+    }
+    
     var body: some View {
         
             NavigationStack {
@@ -46,9 +68,7 @@ struct UnblockedView: View {
                     .aspectRatio(contentMode: .fit)
                     .padding(.horizontal, 40.0)
                     .padding(.bottom, 20.0)
-                
-                // tomato face
-                
+                    
                     
                 // drop down menu to choose mode
                 Menu("Default mode") {
@@ -138,6 +158,8 @@ struct SettingsView: View {
     }
 }
 
+
+
 #Preview {
-    ContentView()
+    TomatoView()
 }

@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		290FF9A92E2EC24F00CA2B20 /* CoreNFC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 290FF9A82E2EC24F00CA2B20 /* CoreNFC.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		290FF96C2E26BD0600CA2B20 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		290FF95E2E26BD0400CA2B20 /* Tomato Brick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tomato Brick.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		290FF96B2E26BD0600CA2B20 /* Tomato BrickTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tomato BrickTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		290FF9752E26BD0600CA2B20 /* Tomato BrickUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tomato BrickUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		290FF9A82E2EC24F00CA2B20 /* CoreNFC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreNFC.framework; path = System/Library/Frameworks/CoreNFC.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -52,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				290FF9A92E2EC24F00CA2B20 /* CoreNFC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +84,7 @@
 				290FF9602E26BD0400CA2B20 /* Tomato Brick */,
 				290FF96E2E26BD0600CA2B20 /* Tomato BrickTests */,
 				290FF9782E26BD0600CA2B20 /* Tomato BrickUITests */,
+				290FF9A72E2EC24F00CA2B20 /* Frameworks */,
 				290FF95F2E26BD0400CA2B20 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +97,14 @@
 				290FF9752E26BD0600CA2B20 /* Tomato BrickUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		290FF9A72E2EC24F00CA2B20 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				290FF9A82E2EC24F00CA2B20 /* CoreNFC.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -395,9 +410,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CWD7B6J54Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Tomato-Brick-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NFCReaderUsageDescription = "\"Tomato Brick uses NFC to block apps on your phone\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -423,9 +441,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CWD7B6J54Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Tomato-Brick-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NFCReaderUsageDescription = "\"Tomato Brick uses NFC to block apps on your phone\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
