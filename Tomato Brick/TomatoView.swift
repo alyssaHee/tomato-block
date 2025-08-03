@@ -32,74 +32,104 @@ struct TomatoView: View {
     
     var body: some View {
         
-            NavigationStack {
-                UnblockedView()
-        }
-        
-    }
-}
-
-struct UnblockedView: View {
-    var body: some View {
-        ZStack() {
-            Color(red: 0.89, green: 0.87, blue: 0.87)
-                .ignoresSafeArea()
-            
-
-            
+        NavigationStack {
             VStack {
                 Spacer()
                     .frame(height: 120.0)
                 
-                Text("Protect Your Energy")
-                    .font(.kodemono(fontStyle: .title2))
-                    .foregroundStyle(.white)
-                    .padding(.bottom, 4.0)
-                    //.textCase(.uppercase)
-                    
-                Text("Tap to Block")
-                    .font(.IBMPlexMono())
-                    .foregroundColor(Color(red:0.84, green: 0.41, blue:0.41))
-                    .padding(.bottom, 4.0)
-                
-                // tomato
-                Image("defaultTomato")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .padding(.horizontal, 40.0)
-                    .padding(.bottom, 20.0)
-                    
-                    
-                // drop down menu to choose mode
-                Menu("Default mode") {
-                    /*@START_MENU_TOKEN@*/Text("Work Mode")/*@END_MENU_TOKEN@*/
-                    /*@START_MENU_TOKEN@*/Text("School Mode")/*@END_MENU_TOKEN@*/
-                    /*@START_MENU_TOKEN@*/Text("Sleep")/*@END_MENU_TOKEN@*/
-                }
-                .padding(.horizontal)
-                .font(.IBMPlexMono(fontStyle: .headline))
-                .foregroundStyle(.black)
-                .border(.black, width: 1.0)
+                tomatoButton()
                 
                 Spacer()
             }
             .padding(.horizontal, 24.0)
+            .background(isBlocking ? Color("blockedBg") : Color("unblockedBg"))
             
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink(destination: SettingsView()) {
-                            Image(systemName: "gearshape.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height: 30)
-                                    .tint(Color(red: 0.67, green: 0.59, blue: 0.59))
-                        }
-                    .padding([.top, .trailing])
+                        Image(systemName: "gearshape.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 30)
+                            .tint(Color(red: 0.67, green: 0.59, blue: 0.59))
                     }
+                    .padding([.top, .trailing])
+                }
+            }
+        }
+        
+    }
+    
+    
+    @ViewBuilder
+    private func tomatoButton() -> some View {
+        VStack {
+            Text("Protect Your Energy")
+                .font(.kodemono(fontStyle: .title2))
+                .foregroundStyle(.white)
+                .padding(.bottom, 4.0)
+            //.textCase(.uppercase)
+            
+            Text(isBlocking ? "Tap to Unblock" : "Tap to Block")
+                .font(.IBMPlexMono())
+                .foregroundColor(Color(red:0.84, green: 0.41, blue:0.41))
+                .padding(.bottom, 4.0)
+            
+            // tomato
+            Image(isBlocking ? "blockTomato" : "defaultTomato")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .padding(.horizontal, 40.0)
+                .padding(.bottom, 20.0)
+            
+            
+            // drop down menu to choose mode
+            Menu("Default mode") {
+                /*@START_MENU_TOKEN@*/Text("Work Mode")/*@END_MENU_TOKEN@*/
+                /*@START_MENU_TOKEN@*/Text("School Mode")/*@END_MENU_TOKEN@*/
+                /*@START_MENU_TOKEN@*/Text("Sleep")/*@END_MENU_TOKEN@*/
+            }
+            .padding(.horizontal)
+            .font(.IBMPlexMono(fontStyle: .headline))
+            .foregroundStyle(.black)
+            .border(.black, width: 1.0)
+        }
+    }
+    
+    
+    private func scanTag() {
+        nfcReader.scan { payload in
+            if payload == tagPhrase {
+                NSLog("Toggling block")
+                appBlocker.toggleBlocking(for: profileManager.currentProfile)
+            } else {
+                showWrongTagAlert = true
+                NSLog("Wrong Tag!\nPayload: \(payload)")
             }
         }
     }
+    
+    
+    private var createTagButton: some View {
+        Button(action: {
+            showCreateTagAlert = true
+        }) {
+            Image(systemName: "plus")
+        }
+        .disabled(!NFCNDEFReaderSession.readingAvailable)
+    }
+    
+    
+    private func createTomatoTag() {
+        nfcReader.write(tagPhrase) { success in
+            nfcWriteSuccess = !success
+            showCreateTagAlert = false
+        }
+    }
+    
 }
+
+
 
 struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
@@ -114,17 +144,17 @@ struct SettingsView: View {
                     .font(.kodemono(fontStyle: .title))
                     .multilineTextAlignment(.leading)
                     .foregroundStyle(.black)
-                    //.textCase(.uppercase)
+                //.textCase(.uppercase)
                 
-           
-                    Text("Modes")
-                        .font(.IBMPlexMono(fontStyle: .title3))
-                        .foregroundColor(.black)
-                        .multilineTextAlignment(.leading)
-                        .padding(.top, -3.0)
-                    
-                   
-                    
+                
+                Text("Modes")
+                    .font(.IBMPlexMono(fontStyle: .title3))
+                    .foregroundColor(.black)
+                    .multilineTextAlignment(.leading)
+                    .padding(.top, -3.0)
+                
+                
+                
                 HStack() {
                     VStack() {
                         Image("happyTomato")
@@ -143,22 +173,20 @@ struct SettingsView: View {
             
             
             // back button
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button(action: {
-                            dismiss()
-                        }) {
-                            Image("settingsExit")
-                        }
-                        .padding([.top, .trailing])
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Image("settingsExit")
                     }
+                    .padding([.top, .trailing])
                 }
+            }
         }
         .navigationBarBackButtonHidden(true)
     }
 }
-
-
 
 #Preview {
     TomatoView()
