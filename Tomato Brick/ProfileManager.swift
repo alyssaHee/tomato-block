@@ -29,7 +29,7 @@ class ProfileManager: ObservableObject {
             profiles = decodedProfiles
         } else {
             // Create default if no saved profiles
-            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "bell.slash") // CHANGE TO MY CUSTOM IMAGE
+            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "happyTomato") // CHANGE TO MY CUSTOM IMAGE
             profiles = [defaultProfile]
             currentProfileId = defaultProfile.id
         }
@@ -174,7 +174,7 @@ struct Profile: Identifiable, Codable {
     var name: String
     var appTokens: Set<ApplicationToken>
     var categoryTokens: Set<ActivityCategoryToken>
-    var icon: String // New property for icon
+    var icon: String
 
     var isDefault: Bool {
         name == "Default"

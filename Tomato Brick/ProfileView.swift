@@ -36,17 +36,17 @@ struct ProfileFormView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Profile Details")) {
+                Section(header: Text("Mode Details")) {
                     VStack(alignment: .leading) {
-                        Text("Profile Name")
+                        Text("Mode Name")
                             .font(.caption)
                             .foregroundColor(.secondary)
-                        TextField("Enter profile name", text: $profileName)
+                        TextField("Enter mode name", text: $profileName)
                     }
                     
                     Button(action: { showImagePicker = true }) {
                         HStack {
-                            Image(systemName: profileIcon)
+                            Image(profileIcon)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 40, height: 40)
@@ -76,22 +76,19 @@ struct ProfileFormView: View {
                             Text("\(activitySelection.categoryTokens.count)")
                                 .fontWeight(.bold)
                         }
-                        Text("Broke can't list the names of the apps due to privacy concerns, it is only able to see the amount of apps selected in the configuration screen.")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
                     }
                 }
                 
                 if profile != nil {
                     Section {
                         Button(action: { showDeleteConfirmation = true }) {
-                            Text("Delete Profile")
+                            Text("Delete Mode")
                                 .foregroundColor(.red)
                         }
                     }
                 }
             }
-            .navigationTitle(profile == nil ? "Add Profile" : "Edit Profile")
+            .navigationTitle(profile == nil ? "Add Mode" : "Edit Mode")
             .navigationBarItems(
                 leading: Button("Cancel", action: onDismiss),
                 trailing: Button("Save", action: handleSave)
@@ -113,8 +110,8 @@ struct ProfileFormView: View {
             }
             .alert(isPresented: $showDeleteConfirmation) {
                 Alert(
-                    title: Text("Delete Profile"),
-                    message: Text("Are you sure you want to delete this profile?"),
+                    title: Text("Delete Mode"),
+                    message: Text("Are you sure you want to delete this mode?"),
                     primaryButton: .destructive(Text("Delete")) {
                         if let profile = profile {
                             profileManager.deleteProfile(withId: profile.id)

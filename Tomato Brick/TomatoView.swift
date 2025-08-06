@@ -23,6 +23,7 @@ struct TomatoView: View {
     @State private var showWrongTagAlert = false
     @State private var showCreateTagAlert = false
     @State private var nfcWriteSuccess = false
+    @State private var showSettings = false
     
     private var isBlocking : Bool {
         get {
@@ -33,27 +34,42 @@ struct TomatoView: View {
     var body: some View {
         
         NavigationStack {
-            VStack {
-                Spacer()
-                    .frame(height: 120.0)
+            ZStack(alignment: .topTrailing) {
+                VStack {
+                    Spacer()
+                        .frame(height: 120.0)
+                    
+                    tomatoButton()
+                    
+                    Spacer()
+                }
+                .padding(.horizontal, 24.0)
+                .background(isBlocking ? Color("blockedBg") : Color("unblockedBg"))
                 
-                tomatoButton()
                 
-                Spacer()
-            }
-            .padding(.horizontal, 24.0)
-            .background(isBlocking ? Color("blockedBg") : Color("unblockedBg"))
-            
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink(destination: SettingsView()) {
-                        Image(systemName: "gearshape.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 30)
-                            .tint(Color(red: 0.67, green: 0.59, blue: 0.59))
+                Button(action: {
+                    withAnimation {
+                        showSettings = true
                     }
-                    .padding([.top, .trailing])
+                })
+                {
+                    Image(systemName: "gearshape.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 30)
+                        .tint(Color(red: 0.67, green: 0.59, blue: 0.59))
+                }
+                .padding(.top, 30)
+                .padding(.trailing, 30)
+                
+                if showSettings {
+                    SettingsView(profileManager: profileManager, dismiss: {
+                        withAnimation {
+                            showSettings = false
+                        }
+                    })
+                    .transition(.identity)
+                    .zIndex(1) // On top
                 }
             }
         }
@@ -130,64 +146,8 @@ struct TomatoView: View {
 }
 
 
-
-struct SettingsView: View {
-    @Environment(\.dismiss) var dismiss
-    
-    var body: some View {
-        ZStack() {
-            Color(red: 0.97, green: 0.96, blue: 0.96)
-                .ignoresSafeArea()
-            
-            VStack(alignment: .leading) {
-                Text("Settings")
-                    .font(.kodemono(fontStyle: .title))
-                    .multilineTextAlignment(.leading)
-                    .foregroundStyle(.black)
-                //.textCase(.uppercase)
-                
-                
-                Text("Modes")
-                    .font(.IBMPlexMono(fontStyle: .title3))
-                    .foregroundColor(.black)
-                    .multilineTextAlignment(.leading)
-                    .padding(.top, -3.0)
-                
-                
-                
-                HStack() {
-                    VStack() {
-                        Image("happyTomato")
-                        Text("Default")
-                            .font(.IBMPlexMono(fontStyle: .body))
-                    }
-                    
-                    Image("addmodeTomato")
-                }
-                
-                Spacer()
-            }
-            .padding(.leading, 40.0)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            
-            
-            
-            // back button
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
-                        dismiss()
-                    }) {
-                        Image("settingsExit")
-                    }
-                    .padding([.top, .trailing])
-                }
-            }
-        }
-        .navigationBarBackButtonHidden(true)
-    }
-}
-
 #Preview {
     TomatoView()
+        .environmentObject(AppBlocker())
+        .environmentObject(ProfileManager())
 }
