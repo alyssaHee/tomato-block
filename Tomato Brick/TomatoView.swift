@@ -58,9 +58,12 @@ struct TomatoView: View {
                     .foregroundStyle(.black)
                     .padding(.horizontal, 10.0)
                     .padding(.vertical, 3.0)
+                    .background(Color.white.opacity(0.1))
+                    .cornerRadius(6.0)
                     .overlay(
                         RoundedRectangle(cornerRadius: 6.0)
                             .stroke(.black.opacity(0.75))
+                            .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 0)
                     )
                     
                     Spacer()

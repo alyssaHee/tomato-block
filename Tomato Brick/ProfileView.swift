@@ -79,7 +79,7 @@ struct ProfileFormView: View {
                     }
                 }
                 
-                if profile != nil {
+                if (profile != nil && profileManager.profiles.count > 1){
                     Section {
                         Button(action: { showDeleteConfirmation = true }) {
                             Text("Delete Mode")
