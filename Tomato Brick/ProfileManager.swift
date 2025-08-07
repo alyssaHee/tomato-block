@@ -29,7 +29,7 @@ class ProfileManager: ObservableObject {
             profiles = decodedProfiles
         } else {
             // Create default if no saved profiles
-            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "happyTomato") // CHANGE TO MY CUSTOM IMAGE
+            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "happyTomato")
             profiles = [defaultProfile]
             currentProfileId = defaultProfile.id
         }

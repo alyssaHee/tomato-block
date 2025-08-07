@@ -18,7 +18,7 @@ struct ProfileFormView: View {
     @State private var showDeleteConfirmation = false
     let profile: Profile?
     let onDismiss: () -> Void
-    let customIcons = ["happyTomato", "sleepTomato", "selfcareTomato", "nerdTomato", "devilishTomato"]
+    let customIcons = ["happyTomato", "sleepTomato", "selfcareTomato", "nerdTomato", "devilishTomato", "deadTomato", "tastyTomato", "hearteyeTomato"]
     
     init(profile: Profile? = nil, profileManager: ProfileManager, onDismiss: @escaping () -> Void) {
         self.profile = profile
@@ -49,7 +49,7 @@ struct ProfileFormView: View {
                             Image(profileIcon)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 40, height: 40)
+                                .frame(width: 50, height: 50)
                             Text("Choose Icon")
                             Spacer()
                             Image(systemName: "chevron.right")
@@ -111,7 +111,7 @@ struct ProfileFormView: View {
             .alert(isPresented: $showDeleteConfirmation) {
                 Alert(
                     title: Text("Delete Mode"),
-                    message: Text("Are you sure you want to delete this mode?"),
+                    message: Text("Are you sure about this??"),
                     primaryButton: .destructive(Text("Delete")) {
                         if let profile = profile {
                             profileManager.deleteProfile(withId: profile.id)

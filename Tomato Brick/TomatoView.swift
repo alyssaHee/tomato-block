@@ -39,12 +39,35 @@ struct TomatoView: View {
                     Spacer()
                         .frame(height: 120.0)
                     
+                    Text("Protect Your Energy")
+                        .font(.kodemono(fontStyle: .title2))
+                        .foregroundStyle(.white)
+                        .padding(.bottom, 4.0)
+                    //.textCase(.uppercase)
+                    
+                    Text(isBlocking ? "Tap to Unblock" : "Tap to Block")
+                        .font(.IBMPlexMono())
+                        .foregroundColor(Color(red:0.84, green: 0.41, blue:0.41))
+                        .padding(.bottom, 4.0)
+                    
                     tomatoButton()
+                    
+                    // display mode in use
+                    Text("Mode: \(profileManager.currentProfile.name)")
+                    .font(.IBMPlexMono(fontStyle: .headline))
+                    .foregroundStyle(.black)
+                    .padding(.horizontal, 10.0)
+                    .padding(.vertical, 3.0)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 6.0)
+                            .stroke(.black.opacity(0.75))
+                    )
                     
                     Spacer()
                 }
                 .padding(.horizontal, 24.0)
                 .background(isBlocking ? Color("blockedBg") : Color("unblockedBg"))
+                .animation(.spring(), value: isBlocking)
                 
                 
                 Button(action: {
@@ -79,38 +102,21 @@ struct TomatoView: View {
     
     @ViewBuilder
     private func tomatoButton() -> some View {
-        VStack {
-            Text("Protect Your Energy")
-                .font(.kodemono(fontStyle: .title2))
-                .foregroundStyle(.white)
-                .padding(.bottom, 4.0)
-            //.textCase(.uppercase)
-            
-            Text(isBlocking ? "Tap to Unblock" : "Tap to Block")
-                .font(.IBMPlexMono())
-                .foregroundColor(Color(red:0.84, green: 0.41, blue:0.41))
-                .padding(.bottom, 4.0)
-            
-            // tomato
+        
+        // tomato
+        Button(action: {
+            withAnimation(.spring()) {
+                scanTag()
+            }
+        }) {
             Image(isBlocking ? "blockTomato" : "defaultTomato")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .padding(.horizontal, 40.0)
                 .padding(.bottom, 20.0)
-            
-            
-            // drop down menu to choose mode
-            Menu("Default mode") {
-                /*@START_MENU_TOKEN@*/Text("Work Mode")/*@END_MENU_TOKEN@*/
-                /*@START_MENU_TOKEN@*/Text("School Mode")/*@END_MENU_TOKEN@*/
-                /*@START_MENU_TOKEN@*/Text("Sleep")/*@END_MENU_TOKEN@*/
-            }
-            .padding(.horizontal)
-            .font(.IBMPlexMono(fontStyle: .headline))
-            .foregroundStyle(.black)
-            .border(.black, width: 1.0)
         }
-    }
+        .transition(.scale)
+}
     
     
     private func scanTag() {
@@ -124,25 +130,6 @@ struct TomatoView: View {
             }
         }
     }
-    
-    
-    private var createTagButton: some View {
-        Button(action: {
-            showCreateTagAlert = true
-        }) {
-            Image(systemName: "plus")
-        }
-        .disabled(!NFCNDEFReaderSession.readingAvailable)
-    }
-    
-    
-    private func createTomatoTag() {
-        nfcReader.write(tagPhrase) { success in
-            nfcWriteSuccess = !success
-            showCreateTagAlert = false
-        }
-    }
-    
 }
 
 

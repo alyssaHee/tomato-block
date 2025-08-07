@@ -7,5 +7,14 @@
 		<string>KodeMono-SemiBold.ttf</string>
 		<string>IBMPlexMono-Regular.ttf</string>
 	</array>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>launchBg</string>
+		<key>UIImageName</key>
+		<string>launchscreen</string>
+		<key>UILaunchScreen</key>
+		<dict/>
+	</dict>
 </dict>
 </plist>

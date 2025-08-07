@@ -7,12 +7,33 @@
 
 import SwiftUI
 import FamilyControls
+import CoreNFC
+import Foundation
 
 struct SettingsView: View {
     @ObservedObject var profileManager: ProfileManager
+    @EnvironmentObject private var appBlocker: AppBlocker
     var dismiss: () -> Void
     @State private var showAddProfileView = false
     @State private var editingProfile: Profile?
+    
+    @StateObject private var nfcReader = NFCReader()
+    private let tagPhrase = "MATO"
+    
+    // @State is for managing local view-specific state
+    @State private var showWrongTagAlert = false
+    @State private var showCreateTagAlert = false
+    @State private var nfcWriteSuccess = false
+    
+    private var rows: Int {
+        min(Int(ceil(Double(profileManager.profiles.count + 1) / 3.0)), 4)
+    }
+    
+    private var isBlocking : Bool {
+        get {
+            return appBlocker.isBlocking
+        }
+    }
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
@@ -20,26 +41,20 @@ struct SettingsView: View {
                 Text("Settings")
                     .font(.kodemono(fontStyle: .title))
                     .multilineTextAlignment(.leading)
-                    .foregroundStyle(.black)
-                    .padding(.top, 40.0)
-                    .padding(.horizontal, 40)
+                    .padding(.top, 36.0)
+                    .padding(.horizontal, 40.0)
                 //.textCase(.uppercase)
                 
                 
                 Text("Modes")
                     .font(.IBMPlexMono(fontStyle: .title2))
-                    .foregroundColor(.black)
                     .multilineTextAlignment(.leading)
-                    .padding(.top, -3.0)
-                    .padding(.horizontal, 40)
+                    .padding(.top, 2.0)
+                    .padding(.horizontal, 40.0)
                 
-                Text("Long press on a profile to edit...")
-                    .font(.caption2)
-                    .foregroundColor(.secondary.opacity(0.7))
-                    .padding(.bottom, 8)
-                    .padding(.horizontal, 40)
                 
                 ScrollView {
+                    // Lazy grid loads view only when needed, much efficient
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 90), spacing: 10)], spacing: 10) {
                         ForEach(profileManager.profiles) { profile in
                             ProfileCell(profile: profile, isSelected: profile.id == profileManager.currentProfileId)
@@ -56,17 +71,46 @@ struct SettingsView: View {
                                 showAddProfileView = true
                             }
                     }
+                    .padding(.horizontal, 40.0)
+                    .padding(.vertical, 3.0)
                 }
-                .frame(height: 240)
-                .padding(.horizontal, 40)
+                .frame(height: CGFloat(rows * 118))
                 
+                
+                Text("Long press on tomato to edit...")
+                    .font(.caption2)
+                    .foregroundColor(.secondary.opacity(0.7))
+                    .padding(.bottom, 8.0)
+                    .padding(.horizontal, 40.0)
+                    .padding(.top, 5.0)
+                    .frame(maxWidth: .infinity, alignment: .center)
                 
                 Text("Create Tag")
                     .font(.IBMPlexMono(fontStyle: .title2))
-                    .foregroundColor(.black)
                     .multilineTextAlignment(.leading)
-                    .padding(.top, 5.0)
-                    .padding(.horizontal, 40)
+                    .padding(.top, 10.0)
+                    .padding(.horizontal, 40.0)
+                
+                createTagButton()
+                    .alert(isPresented: $showWrongTagAlert) {
+                        Alert(
+                            title: Text("Not a Tomato Tag"),
+                            message: Text("You can create a new tomato tag in settings"),
+                            dismissButton: .default(Text("OK"))
+                        )
+                    }
+                    .alert("Create Tomato Tag", isPresented: $showCreateTagAlert) {
+                        Button("Create") { createTomatoTag() }
+                        Button("Cancel", role: .cancel) {}
+                    } message: {
+                        Text("Do you want to create a tomato tag?")
+                    }
+                    .alert("Tag Creation", isPresented: $nfcWriteSuccess) {
+                        Button("OK", role: .cancel) { }
+                    } message: {
+                        Text(nfcWriteSuccess ? "Tomato tag created successfully!" : "Failed to create tomato tag :(. Please try again.")
+                    }
+        
                 
                 Spacer()
                 
@@ -90,17 +134,37 @@ struct SettingsView: View {
             // back button
             Button(action: {
                 dismiss()
-                }) {
-                    Image("settingsExit")
-                }
-                .padding(.top, 30)
-                .padding(.trailing, 30)
-                
+            }) {
+                Image("settingsExit")
+            }
+            .padding(.top, 30.0)
+            .padding(.trailing, 30.0)
+            
         }
         .background(Color("settingsBg"))
+        .animation(.spring(), value: isBlocking)
         
     }
     
+    
+    
+    @ViewBuilder
+    private func createTagButton() -> some View {
+        Button(action: {
+            showCreateTagAlert = true
+        }) {
+            Image("tagTomato")
+                .padding(.horizontal, 40.0)
+        }
+        .disabled(!NFCNDEFReaderSession.readingAvailable)
+    }
+    
+    private func createTomatoTag() {
+        nfcReader.write(tagPhrase) { success in
+            nfcWriteSuccess = !success
+            showCreateTagAlert = false
+        }
+    }
 }
 
 struct ProfileCellBase: View {
@@ -127,9 +191,9 @@ struct ProfileCellBase: View {
         .background(isSelected ? Color.red.opacity(0.1) : Color.clear)
         .cornerRadius(18)
         .overlay(
-            RoundedRectangle(cornerRadius: 8)
+            RoundedRectangle(cornerRadius: 18)
                 .stroke(
-                    isSelected ? Color.clear : (isDashed ? Color.clear : Color.clear),
+                    isSelected ? Color.red.opacity(0.4) : (isDashed ? Color.clear : Color.clear),
                     style: StrokeStyle(lineWidth: 2, dash: isDashed ? [5] : [])
                 )
         )
