@@ -64,6 +64,8 @@ class AppBlocker: ObservableObject {
     
     
     func applyBlockingSettings(for profile: Profile) {
+        
+        
         if isBlocking {
             NSLog("Blocking \(profile.appTokens.count) apps")
             store.shield.applications = profile.appTokens.isEmpty ? nil : profile.appTokens

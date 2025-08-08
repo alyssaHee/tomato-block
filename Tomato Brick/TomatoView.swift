@@ -14,6 +14,7 @@ struct TomatoView: View {
     // EnvironmentObject shares instance of ObservableObject class throughout views
     @EnvironmentObject private var appBlocker: AppBlocker
     @EnvironmentObject private var profileManager: ProfileManager
+    @EnvironmentObject private var timeBlocked: TomatoTimer
     
     // @StateObject is for managing reference types like classes unlike @State which manages simple variables
     @StateObject private var nfcReader = NFCReader()
@@ -66,28 +67,35 @@ struct TomatoView: View {
                             .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 0)
                     )
                     
+                    if isBlocking {
+                        Text("Blocked for \(timeBlocked.formattedElapsedTime)")
+                            .font(.IBMPlexMono(fontStyle: .headline))
+                            .foregroundColor(.white)
+                    }
+                    
                     Spacer()
                 }
                 .padding(.horizontal, 24.0)
                 .background(isBlocking ? Color("blockedBg") : Color("unblockedBg"))
                 .animation(.spring(), value: isBlocking)
                 
-                
-                Button(action: {
-                    withAnimation {
-                        showSettings = true
+                if !isBlocking {
+                    Button(action: {
+                        withAnimation {
+                            showSettings = true
+                        }
+                    })
+                    {
+                        Image(systemName: "gearshape.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 30)
+                            .tint(Color(red: 0.67, green: 0.59, blue: 0.59))
                     }
-                })
-                {
-                    Image(systemName: "gearshape.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: 30)
-                        .tint(Color(red: 0.67, green: 0.59, blue: 0.59))
+                    .padding(.top, 30)
+                    .padding(.trailing, 30)
                 }
-                .padding(.top, 30)
-                .padding(.trailing, 30)
-                
+                    
                 if showSettings {
                     SettingsView(profileManager: profileManager, dismiss: {
                         withAnimation {
@@ -119,14 +127,15 @@ struct TomatoView: View {
                 .padding(.bottom, 20.0)
         }
         .transition(.scale)
-}
-    
+    }
+
     
     private func scanTag() {
-        nfcReader.scan { payload in
+        nfcReader.scan(modeName: profileManager.currentProfile.name) { payload in
             if payload == tagPhrase {
                 NSLog("Toggling block")
                 appBlocker.toggleBlocking(for: profileManager.currentProfile)
+                isBlocking ? timeBlocked.stopTimer() : timeBlocked.startTimer()
             } else {
                 showWrongTagAlert = true
                 NSLog("Wrong Tag!\nPayload: \(payload)")

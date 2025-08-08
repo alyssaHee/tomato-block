@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		290FF9A92E2EC24F00CA2B20 /* CoreNFC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 290FF9A82E2EC24F00CA2B20 /* CoreNFC.framework */; };
+		290FF9CE2E457A8A00CA2B20 /* ManagedSettings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 290FF9CD2E457A8A00CA2B20 /* ManagedSettings.framework */; };
+		290FF9D02E457A8A00CA2B20 /* ManagedSettingsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 290FF9CF2E457A8A00CA2B20 /* ManagedSettingsUI.framework */; };
+		290FF9D82E457A8A00CA2B20 /* Shield.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 290FF9CC2E457A8A00CA2B20 /* Shield.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,14 +28,48 @@
 			remoteGlobalIDString = 290FF95D2E26BD0400CA2B20;
 			remoteInfo = "Tomato Brick";
 		};
+		290FF9D62E457A8A00CA2B20 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 290FF9562E26BD0400CA2B20 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 290FF9CB2E457A8A00CA2B20;
+			remoteInfo = Shield;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		290FF9DD2E457A8A00CA2B20 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				290FF9D82E457A8A00CA2B20 /* Shield.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		290FF95E2E26BD0400CA2B20 /* Tomato Brick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tomato Brick.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		290FF96B2E26BD0600CA2B20 /* Tomato BrickTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tomato BrickTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		290FF9752E26BD0600CA2B20 /* Tomato BrickUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tomato BrickUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		290FF9A82E2EC24F00CA2B20 /* CoreNFC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreNFC.framework; path = System/Library/Frameworks/CoreNFC.framework; sourceTree = SDKROOT; };
+		290FF9CC2E457A8A00CA2B20 /* Shield.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Shield.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		290FF9CD2E457A8A00CA2B20 /* ManagedSettings.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ManagedSettings.framework; path = System/Library/Frameworks/ManagedSettings.framework; sourceTree = SDKROOT; };
+		290FF9CF2E457A8A00CA2B20 /* ManagedSettingsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ManagedSettingsUI.framework; path = System/Library/Frameworks/ManagedSettingsUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		290FF9D92E457A8A00CA2B20 /* Exceptions for "Shield" folder in "Shield" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 290FF9CB2E457A8A00CA2B20 /* Shield */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		290FF9602E26BD0400CA2B20 /* Tomato Brick */ = {
@@ -48,6 +85,14 @@
 		290FF9782E26BD0600CA2B20 /* Tomato BrickUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "Tomato BrickUITests";
+			sourceTree = "<group>";
+		};
+		290FF9D12E457A8A00CA2B20 /* Shield */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				290FF9D92E457A8A00CA2B20 /* Exceptions for "Shield" folder in "Shield" target */,
+			);
+			path = Shield;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +120,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		290FF9C92E457A8A00CA2B20 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				290FF9CE2E457A8A00CA2B20 /* ManagedSettings.framework in Frameworks */,
+				290FF9D02E457A8A00CA2B20 /* ManagedSettingsUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -84,6 +138,7 @@
 				290FF9602E26BD0400CA2B20 /* Tomato Brick */,
 				290FF96E2E26BD0600CA2B20 /* Tomato BrickTests */,
 				290FF9782E26BD0600CA2B20 /* Tomato BrickUITests */,
+				290FF9D12E457A8A00CA2B20 /* Shield */,
 				290FF9A72E2EC24F00CA2B20 /* Frameworks */,
 				290FF95F2E26BD0400CA2B20 /* Products */,
 			);
@@ -95,6 +150,7 @@
 				290FF95E2E26BD0400CA2B20 /* Tomato Brick.app */,
 				290FF96B2E26BD0600CA2B20 /* Tomato BrickTests.xctest */,
 				290FF9752E26BD0600CA2B20 /* Tomato BrickUITests.xctest */,
+				290FF9CC2E457A8A00CA2B20 /* Shield.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -103,6 +159,8 @@
 			isa = PBXGroup;
 			children = (
 				290FF9A82E2EC24F00CA2B20 /* CoreNFC.framework */,
+				290FF9CD2E457A8A00CA2B20 /* ManagedSettings.framework */,
+				290FF9CF2E457A8A00CA2B20 /* ManagedSettingsUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -117,10 +175,12 @@
 				290FF95A2E26BD0400CA2B20 /* Sources */,
 				290FF95B2E26BD0400CA2B20 /* Frameworks */,
 				290FF95C2E26BD0400CA2B20 /* Resources */,
+				290FF9DD2E457A8A00CA2B20 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				290FF9D72E457A8A00CA2B20 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				290FF9602E26BD0400CA2B20 /* Tomato Brick */,
@@ -178,6 +238,28 @@
 			productReference = 290FF9752E26BD0600CA2B20 /* Tomato BrickUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		290FF9CB2E457A8A00CA2B20 /* Shield */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 290FF9DA2E457A8A00CA2B20 /* Build configuration list for PBXNativeTarget "Shield" */;
+			buildPhases = (
+				290FF9C82E457A8A00CA2B20 /* Sources */,
+				290FF9C92E457A8A00CA2B20 /* Frameworks */,
+				290FF9CA2E457A8A00CA2B20 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				290FF9D12E457A8A00CA2B20 /* Shield */,
+			);
+			name = Shield;
+			packageProductDependencies = (
+			);
+			productName = Shield;
+			productReference = 290FF9CC2E457A8A00CA2B20 /* Shield.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -199,6 +281,9 @@
 						CreatedOnToolsVersion = 16.4;
 						TestTargetID = 290FF95D2E26BD0400CA2B20;
 					};
+					290FF9CB2E457A8A00CA2B20 = {
+						CreatedOnToolsVersion = 16.4;
+					};
 				};
 			};
 			buildConfigurationList = 290FF9592E26BD0400CA2B20 /* Build configuration list for PBXProject "Tomato Brick" */;
@@ -218,6 +303,7 @@
 				290FF95D2E26BD0400CA2B20 /* Tomato Brick */,
 				290FF96A2E26BD0600CA2B20 /* Tomato BrickTests */,
 				290FF9742E26BD0600CA2B20 /* Tomato BrickUITests */,
+				290FF9CB2E457A8A00CA2B20 /* Shield */,
 			);
 		};
 /* End PBXProject section */
@@ -238,6 +324,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		290FF9732E26BD0600CA2B20 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		290FF9CA2E457A8A00CA2B20 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -268,6 +361,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		290FF9C82E457A8A00CA2B20 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -280,6 +380,11 @@
 			isa = PBXTargetDependency;
 			target = 290FF95D2E26BD0400CA2B20 /* Tomato Brick */;
 			targetProxy = 290FF9762E26BD0600CA2B20 /* PBXContainerItemProxy */;
+		};
+		290FF9D72E457A8A00CA2B20 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 290FF9CB2E457A8A00CA2B20 /* Shield */;
+			targetProxy = 290FF9D62E457A8A00CA2B20 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -414,6 +519,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Tomato-Brick-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NFCReaderUsageDescription = "\"Tomato Brick uses NFC to block apps on your phone\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -444,6 +550,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Tomato-Brick-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NFCReaderUsageDescription = "\"Tomato Brick uses NFC to block apps on your phone\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -531,6 +638,58 @@
 			};
 			name = Release;
 		};
+		290FF9DB2E457A8A00CA2B20 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Shield/Shield.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CWD7B6J54Q;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Shield/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Shield;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alyssa.Tomato-Brick.Shield";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		290FF9DC2E457A8A00CA2B20 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Shield/Shield.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CWD7B6J54Q;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Shield/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Shield;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alyssa.Tomato-Brick.Shield";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -566,6 +725,15 @@
 			buildConfigurations = (
 				290FF9862E26BD0600CA2B20 /* Debug */,
 				290FF9872E26BD0600CA2B20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		290FF9DA2E457A8A00CA2B20 /* Build configuration list for PBXNativeTarget "Shield" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				290FF9DB2E457A8A00CA2B20 /* Debug */,
+				290FF9DC2E457A8A00CA2B20 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

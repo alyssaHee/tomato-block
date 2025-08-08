@@ -18,15 +18,15 @@ struct CustomImagePicker: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 90))]) {
                     ForEach(imageNames, id: \.self) { name in
                         Image(name)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 60, height: 60)
+                            .frame(width: 85, height: 85)
                             .padding()
-                            .background(selection == name ? Color.blue.opacity(0.3) : Color.clear)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .background(selection == name ? Color.blue.opacity(0.2) : Color.clear)
+                            .clipShape(RoundedRectangle(cornerRadius: 18))
                             .onTapGesture {
                                 selection = name
                                 if autoDismiss {

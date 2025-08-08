@@ -15,10 +15,10 @@ class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
     var isWriting = false
     var textToWrite: String?
     
-    func scan(completion: @escaping (String) -> Void) {
+    func scan(modeName: String, completion: @escaping (String) -> Void) {
         self.onScanComplete = completion
         self.isWriting = false
-        startSession()
+        startSession(modeName: modeName)
     }
     
     func write(_ text: String, completion: @escaping (Bool) -> Void) {
@@ -28,14 +28,20 @@ class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
         startSession()
     }
     
-    private func startSession() {
+    private func startSession(modeName: String? = nil) {
         guard NFCNDEFReaderSession.readingAvailable else {
             NSLog("NFC is not available on this device")
             return
         }
         
         session = NFCNDEFReaderSession(delegate: self, queue: nil, invalidateAfterFirstRead: false)
-        session?.alertMessage = isWriting ? "Hold your iPhone near your tomato to write." : "Hold your iPhone near your tomato to read."
+        if isWriting {
+                session?.alertMessage = "Hold your iPhone near tomato to create tag."
+            } else if let modeName = modeName {
+                session?.alertMessage = "Hold your iPhone near tomato to trigger \(modeName) mode."
+            } else {
+                session?.alertMessage = "Hold your iPhone near tomato."
+            }
         session?.begin()
     }
     
@@ -66,7 +72,7 @@ class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
     
     private func handleReading(session: NFCNDEFReaderSession, tags: [NFCNDEFTag]) {
         if tags.count > 1 {
-            session.alertMessage = "More than 1 tomato detected. Please try again with only one tomato you greedy hooligan."
+            session.alertMessage = "More than 1 tomato detected. Please try again."
             session.invalidate()
             return
         }

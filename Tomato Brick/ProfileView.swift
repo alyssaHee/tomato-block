@@ -96,7 +96,7 @@ struct ProfileFormView: View {
             )
             .sheet(isPresented: $showImagePicker) {
                         CustomImagePicker(selection: $profileIcon,
-                                          title: "Pick an Icon",
+                                          title: "Pick an icon!",
                                           imageNames: customIcons)
                     }
             .sheet(isPresented: $showAppSelection) {
@@ -111,7 +111,7 @@ struct ProfileFormView: View {
             .alert(isPresented: $showDeleteConfirmation) {
                 Alert(
                     title: Text("Delete Mode"),
-                    message: Text("Are you sure about this??"),
+                    message: Text("Are you sure about this?"),
                     primaryButton: .destructive(Text("Delete")) {
                         if let profile = profile {
                             profileManager.deleteProfile(withId: profile.id)
