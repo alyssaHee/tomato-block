@@ -102,8 +102,7 @@ struct ProfileFormView: View {
             .sheet(isPresented: $showAppSelection) {
                 NavigationView {
                     FamilyActivityPicker(selection: $activitySelection)
-                        .navigationTitle("Select Apps")
-                        .navigationBarItems(trailing: Button("Done") {
+                        .navigationBarItems(trailing: Button("Done!") {
                             showAppSelection = false
                         })
                 }

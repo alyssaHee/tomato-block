@@ -80,7 +80,7 @@ struct SettingsView: View {
                 
                 Text("Long press on tomato to edit...")
                     .font(.caption2)
-                    .foregroundColor(.secondary.opacity(0.7))
+                    .foregroundColor(Color("blurbColour"))
                     .padding(.bottom, 8.0)
                     .padding(.horizontal, 40.0)
                     .padding(.top, 5.0)
@@ -90,7 +90,7 @@ struct SettingsView: View {
                     .font(.IBMPlexMono(fontStyle: .title2))
                     .foregroundColor(Color("settingsTextColour"))
                     .multilineTextAlignment(.leading)
-                    .padding(.top, 10.0)
+                    .padding(.top, 8.0)
                     .padding(.horizontal, 40.0)
                 
                 createTagButton()
@@ -156,7 +156,7 @@ struct SettingsView: View {
             showCreateTagAlert = true
         }) {
             Image("tagTomato")
-                .padding(.horizontal, 40.0)
+                .padding(.horizontal, 50.0)
         }
         .disabled(!NFCNDEFReaderSession.readingAvailable)
     }
@@ -196,7 +196,7 @@ struct ProfileCellBase: View {
         .overlay(
             RoundedRectangle(cornerRadius: 18)
                 .stroke(
-                    isSelected ? Color.red.opacity(0.35) : (isDashed ? Color.clear : Color.clear),
+                    isSelected ? Color.red.opacity(0.4) : (isDashed ? Color.clear : Color.clear),
                     style: StrokeStyle(lineWidth: 2, dash: isDashed ? [5] : [])
                 )
         )
