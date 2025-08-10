@@ -71,6 +71,7 @@ struct TomatoView: View {
                         Text("Blocked for \(timeBlocked.formattedElapsedTime)")
                             .font(.IBMPlexMono(fontStyle: .headline))
                             .foregroundColor(.white)
+                            .padding(.top, 3.0)
                     }
                     
                     Spacer()
@@ -90,7 +91,7 @@ struct TomatoView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 30)
-                            .tint(Color(red: 0.67, green: 0.59, blue: 0.59))
+                            .tint(Color("settingsGear"))
                     }
                     .padding(.top, 30)
                     .padding(.trailing, 30)
@@ -120,7 +121,7 @@ struct TomatoView: View {
                 scanTag()
             }
         }) {
-            Image(isBlocking ? "blockTomato" : "defaultTomato")
+            Image(isBlocking ? "blockTomato" : "\(profileManager.currentProfile.icon)1")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .padding(.horizontal, 40.0)

@@ -48,6 +48,7 @@ struct SettingsView: View {
                 
                 Text("Modes")
                     .font(.IBMPlexMono(fontStyle: .title2))
+                    .foregroundColor(Color("settingsTextColour"))
                     .multilineTextAlignment(.leading)
                     .padding(.top, 2.0)
                     .padding(.horizontal, 40.0)
@@ -87,6 +88,7 @@ struct SettingsView: View {
                 
                 Text("Create Tag")
                     .font(.IBMPlexMono(fontStyle: .title2))
+                    .foregroundColor(Color("settingsTextColour"))
                     .multilineTextAlignment(.leading)
                     .padding(.top, 10.0)
                     .padding(.horizontal, 40.0)
@@ -182,6 +184,7 @@ struct ProfileCellBase: View {
 
             Text(name)
                 .font(.IBMPlexMono(fontStyle: .body))
+                .foregroundColor(Color("modeDescriptions"))
                 .lineLimit(1)
             
 
@@ -193,7 +196,7 @@ struct ProfileCellBase: View {
         .overlay(
             RoundedRectangle(cornerRadius: 18)
                 .stroke(
-                    isSelected ? Color.red.opacity(0.4) : (isDashed ? Color.clear : Color.clear),
+                    isSelected ? Color.red.opacity(0.35) : (isDashed ? Color.clear : Color.clear),
                     style: StrokeStyle(lineWidth: 2, dash: isDashed ? [5] : [])
                 )
         )

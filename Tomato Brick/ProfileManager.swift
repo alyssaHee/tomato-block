@@ -29,7 +29,7 @@ class ProfileManager: ObservableObject {
             profiles = decodedProfiles
         } else {
             // Create default if no saved profiles
-            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "happyTomato")
+            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "defaultTomato")
             profiles = [defaultProfile]
             currentProfileId = defaultProfile.id
         }
@@ -53,7 +53,7 @@ class ProfileManager: ObservableObject {
     }
     
     
-    func addProfile(name: String, icon: String = "happyTomato") {
+    func addProfile(name: String, icon: String = "defaultTomato") {
         let newProfile = Profile(name: name, appTokens: [], categoryTokens: [], icon: icon)
         profiles.append(newProfile)
         currentProfileId = newProfile.id
@@ -154,7 +154,7 @@ class ProfileManager: ObservableObject {
     
     private func ensureDefaultProfile() {
         if profiles.isEmpty {
-            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "happyTomato")
+            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "defaultTomato")
             profiles.append(defaultProfile)
             currentProfileId = defaultProfile.id
             saveProfiles()
@@ -181,7 +181,7 @@ struct Profile: Identifiable, Codable {
     }
 
     // New initializer to support default icon
-    init(name: String, appTokens: Set<ApplicationToken>, categoryTokens: Set<ActivityCategoryToken>, icon: String = "happyTomato") {
+    init(name: String, appTokens: Set<ApplicationToken>, categoryTokens: Set<ActivityCategoryToken>, icon: String = "defaultTomato") {
         self.id = UUID()
         self.name = name
         self.appTokens = appTokens

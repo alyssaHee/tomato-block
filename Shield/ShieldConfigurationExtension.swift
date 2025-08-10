@@ -18,8 +18,8 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
             backgroundColor: UIColor(red: 0.12, green: 0.11, blue: 0.11, alpha: 1.0),
             icon: UIImage(named: "launchscreen"),
             title: ShieldConfiguration.Label(text: "Good things take time", color: .white),
-            subtitle: ShieldConfiguration.Label(text: "Take a breath, reset. You got this! To access app tap your tomato brick.", color: .white),
-            primaryButtonLabel: ShieldConfiguration.Label(text: "Focus", color: .white),
+            subtitle: ShieldConfiguration.Label(text: "Take a breath, reset. You got this! To access app tap your tomato brick.", color: UIColor(red: 1, green: 1, blue: 1, alpha: 0.8)),
+            primaryButtonLabel: ShieldConfiguration.Label(text: "Focus", color: UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)),
             primaryButtonBackgroundColor: UIColor(red: 0.21, green: 0.18, blue: 0.18, alpha: 1.0)
         )
     }
@@ -30,8 +30,8 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
             backgroundColor: UIColor(red: 0.12, green: 0.11, blue: 0.11, alpha: 1.0),
             icon: UIImage(named: "launchscreen"),
             title: ShieldConfiguration.Label(text: "Good Things Take Time", color: .white),
-            subtitle: ShieldConfiguration.Label(text: "Take a breath, reset. You got this! To access app tap your tomato brick.", color: .white),
-            primaryButtonLabel: ShieldConfiguration.Label(text: "Focus", color: .white),
+            subtitle: ShieldConfiguration.Label(text: "Take a breath, reset. You got this! To access app tap your tomato brick.", color: UIColor(red: 1, green: 1, blue: 1, alpha: 0.8)),
+            primaryButtonLabel: ShieldConfiguration.Label(text: "Focus", color: UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)),
             primaryButtonBackgroundColor: UIColor(red: 0.21, green: 0.18, blue: 0.18, alpha: 1.0)
         )
     }

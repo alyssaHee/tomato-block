@@ -18,14 +18,14 @@ struct ProfileFormView: View {
     @State private var showDeleteConfirmation = false
     let profile: Profile?
     let onDismiss: () -> Void
-    let customIcons = ["happyTomato", "sleepTomato", "selfcareTomato", "nerdTomato", "devilishTomato", "deadTomato", "tastyTomato", "hearteyeTomato"]
+    let customIcons = ["defaultTomato", "happyTomato", "nerdTomato", "sleepTomato", "selfcareTomato", "devilishTomato", "deadTomato", "tastyTomato", "hearteyeTomato"]
     
     init(profile: Profile? = nil, profileManager: ProfileManager, onDismiss: @escaping () -> Void) {
         self.profile = profile
         self.profileManager = profileManager
         self.onDismiss = onDismiss
         _profileName = State(initialValue: profile?.name ?? "")
-        _profileIcon = State(initialValue: profile?.icon ?? "happyTomato")
+        _profileIcon = State(initialValue: profile?.icon ?? "defaultTomato")
         
         var selection = FamilyActivitySelection()
         selection.applicationTokens = profile?.appTokens ?? []
