@@ -18,7 +18,7 @@ struct ProfileFormView: View {
     @State private var showDeleteConfirmation = false
     let profile: Profile?
     let onDismiss: () -> Void
-    let customIcons = ["defaultTomato", "happyTomato", "nerdTomato", "sleepTomato", "selfcareTomato", "devilishTomato", "deadTomato", "tastyTomato", "hearteyeTomato"]
+    let customIcons = ["defaultTomato", "happyTomato", "nerdTomato", "sleepTomato", "selfcareTomato", "devilishTomato", "deadTomato", "tastyTomato", "hearteyeTomato", "gymTomato"]
     
     init(profile: Profile? = nil, profileManager: ProfileManager, onDismiss: @escaping () -> Void) {
         self.profile = profile
