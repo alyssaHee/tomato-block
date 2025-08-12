@@ -11,12 +11,14 @@ import SwiftUI
 struct Tomato_BrickApp: App {
     @StateObject private var appBlocker = AppBlocker()
     @StateObject private var profileManager = ProfileManager()
+    @StateObject private var tomatoTimer = TomatoTimer()
     
     var body: some Scene {
         WindowGroup {
             TomatoView()
                 .environmentObject(appBlocker)
                 .environmentObject(profileManager)
+                .environmentObject(tomatoTimer)
         }
     }
 }
