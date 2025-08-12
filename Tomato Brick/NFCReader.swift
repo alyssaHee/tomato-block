@@ -36,9 +36,9 @@ class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
         
         session = NFCNDEFReaderSession(delegate: self, queue: nil, invalidateAfterFirstRead: false)
         if isWriting {
-                session?.alertMessage = "Hold your iPhone near tomato to create tag."
+                session?.alertMessage = "Tap the top of your iPhone to tomato to create tag."
             } else if let modeName = modeName {
-                session?.alertMessage = "Hold your iPhone near tomato to trigger \(modeName) mode."
+                session?.alertMessage = "Tap the top of your iPhone to tomato to trigger \(modeName) mode."
             } else {
                 session?.alertMessage = "Hold your iPhone near tomato."
             }
@@ -99,7 +99,7 @@ class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
                             session.invalidate(errorMessage: "Read error: \(error.localizedDescription)")
                         } else if let message = message {
                             self.processMessage(message)
-                            session.alertMessage = "Tomato read successfully!"
+                            //session.alertMessage = "Tomato read successfully!"
                             session.invalidate()
                         } else {
                             session.invalidate(errorMessage: "No NDEF message found on tomato")
@@ -174,9 +174,9 @@ class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
                     
                     tag.writeNDEF(message) { error in
                         if let error = error {
-                            session.invalidate(errorMessage: "Write failed: \(error.localizedDescription)")
+                            session.invalidate(errorMessage: "Failed to create tag: \(error.localizedDescription)")
                         } else {
-                            session.alertMessage = "Write successful!"
+                            session.alertMessage = "Tomato tag created successfully!"
                             session.invalidate()
                         }
                         
@@ -200,4 +200,9 @@ class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
         }
         self.session = nil
     }
+    
+    func readerSessionDidBecomeActive(_ session: NFCNDEFReaderSession) {
+        NSLog("NFC session became active")
+    }
+    
 }
