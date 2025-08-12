@@ -41,13 +41,13 @@ struct SettingsView: View {
                 Text("Settings")
                     .font(.kodemono(fontStyle: .title))
                     .multilineTextAlignment(.leading)
-                    .padding(.top, 36.0)
+                    .padding(.top, 40.0)
                     .padding(.horizontal, 40.0)
                 //.textCase(.uppercase)
                 
                 
                 Text("Modes")
-                    .font(.IBMPlexMono(fontStyle: .title2))
+                    .font(.IBMPlexMono(fontStyle: .title3))
                     .foregroundColor(Color("settingsTextColour"))
                     .multilineTextAlignment(.leading)
                     .padding(.top, 2.0)
@@ -75,7 +75,7 @@ struct SettingsView: View {
                     .padding(.horizontal, 40.0)
                     .padding(.vertical, 3.0)
                 }
-                .frame(height: CGFloat(rows * 118))
+                .frame(height: CGFloat(rows * 117))
                 
                 
                 Text("Long press on tomato to edit...")
@@ -83,14 +83,14 @@ struct SettingsView: View {
                     .foregroundColor(Color("blurbColour"))
                     .padding(.bottom, 8.0)
                     .padding(.horizontal, 40.0)
-                    .padding(.top, 5.0)
+                    .padding(.top, 4.0)
                     .frame(maxWidth: .infinity, alignment: .center)
                 
                 Text("Create Tag")
-                    .font(.IBMPlexMono(fontStyle: .title2))
+                    .font(.IBMPlexMono(fontStyle: .title3))
                     .foregroundColor(Color("settingsTextColour"))
                     .multilineTextAlignment(.leading)
-                    .padding(.top, 8.0)
+                    .padding(.top, 10.0)
                     .padding(.horizontal, 40.0)
                 
                 createTagButton()

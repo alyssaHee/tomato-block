@@ -41,8 +41,8 @@ struct TomatoView: View {
                         .frame(height: 120.0)
                     
                     Text("Protect Your Energy")
-                        .font(.kodemono(fontStyle: .title2))
-                        .foregroundStyle(.white)
+                        .font(.kodemono(fontStyle: .title3))
+                        .foregroundStyle(.white.opacity(0.65))
                         .padding(.bottom, 4.0)
                     //.textCase(.uppercase)
                     
@@ -55,21 +55,20 @@ struct TomatoView: View {
                     
                     // display mode in use
                     Text("Mode: \(profileManager.currentProfile.name)")
-                    .font(.IBMPlexMono(fontStyle: .headline))
+                    .font(.IBMPlexMono(fontStyle: .body))
                     .foregroundStyle(.black)
                     .padding(.horizontal, 10.0)
                     .padding(.vertical, 3.0)
-                    .background(Color.white.opacity(0.1))
+                    .background(Color.white.opacity(0.15))
                     .cornerRadius(6.0)
                     .overlay(
                         RoundedRectangle(cornerRadius: 6.0)
                             .stroke(.black.opacity(0.75))
-                            .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 0)
                     )
                     
                     if isBlocking {
                         Text("Blocked for \(timeBlocked.formattedElapsedTime)")
-                            .font(.IBMPlexMono(fontStyle: .headline))
+                            .font(.IBMPlexMono(fontStyle: .body))
                             .foregroundColor(.white)
                             .padding(.top, 3.0)
                     }
@@ -121,7 +120,7 @@ struct TomatoView: View {
                 scanTag()
             }
         }) {
-            Image(isBlocking ? "blockTomato" : "\(profileManager.currentProfile.icon)1")
+            Image(isBlocking ? "blockedTomato" : "\(profileManager.currentProfile.icon)1")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .padding(.horizontal, 40.0)
@@ -136,7 +135,7 @@ struct TomatoView: View {
             if payload == tagPhrase {
                 NSLog("Toggling block")
                 appBlocker.toggleBlocking(for: profileManager.currentProfile)
-                isBlocking ? timeBlocked.stopTimer() : timeBlocked.startTimer()
+                isBlocking ? timeBlocked.startTimer() : timeBlocked.stopTimer()
             } else {
                 showWrongTagAlert = true
                 NSLog("Wrong Tag!\nPayload: \(payload)")
