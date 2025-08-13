@@ -15,10 +15,10 @@ class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
     var isWriting = false
     var textToWrite: String?
     
-    func scan(modeName: String, completion: @escaping (String) -> Void) {
+    func scan(modeName: String, status: String, completion: @escaping (String) -> Void) {
         self.onScanComplete = completion
         self.isWriting = false
-        startSession(modeName: modeName)
+        startSession(modeName: modeName, status: status)
     }
     
     func write(_ text: String, completion: @escaping (Bool) -> Void) {
@@ -28,7 +28,7 @@ class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
         startSession()
     }
     
-    private func startSession(modeName: String? = nil) {
+    private func startSession(modeName: String? = nil, status: String? = nil) {
         guard NFCNDEFReaderSession.readingAvailable else {
             NSLog("NFC is not available on this device")
             return
@@ -38,7 +38,7 @@ class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
         if isWriting {
                 session?.alertMessage = "Tap the top of your iPhone to tomato to create tag."
             } else if let modeName = modeName {
-                session?.alertMessage = "Tap the top of your iPhone to tomato to trigger \(modeName) mode."
+                session?.alertMessage = "Tap the top of your iPhone to tomato to \(status ?? "trigger") \(modeName) mode."
             } else {
                 session?.alertMessage = "Hold your iPhone near tomato."
             }

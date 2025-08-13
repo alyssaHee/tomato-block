@@ -69,7 +69,7 @@ struct TomatoView: View {
                     if isBlocking {
                         Text("Blocked for \(timeBlocked.formattedElapsedTime)")
                             .font(.IBMPlexMono(fontStyle: .body))
-                            .foregroundColor(.white)
+                            .foregroundColor(.white.opacity(0.8))
                             .padding(.top, 3.0)
                     }
                     
@@ -81,9 +81,9 @@ struct TomatoView: View {
                 
                 if !isBlocking {
                     Button(action: {
-                        withAnimation {
+                        //withAnimation {
                             showSettings = true
-                        }
+                        //}
                     })
                     {
                         Image(systemName: "gearshape.fill")
@@ -98,11 +98,11 @@ struct TomatoView: View {
                     
                 if showSettings {
                     SettingsView(profileManager: profileManager, dismiss: {
-                        withAnimation {
+                        //withAnimation {
                             showSettings = false
-                        }
+                        //}
                     })
-                    .transition(.identity)
+                    //.transition(.identity)
                     .zIndex(1) // On top
                 }
             }
@@ -131,7 +131,13 @@ struct TomatoView: View {
 
     
     private func scanTag() {
-        nfcReader.scan(modeName: profileManager.currentProfile.name) { payload in
+        var status: String?
+        if isBlocking {
+            status = "stop"
+        } else {
+            status = "start"
+        }
+        nfcReader.scan(modeName: profileManager.currentProfile.name, status: status!) { payload in
             if payload == tagPhrase {
                 NSLog("Toggling block")
                 appBlocker.toggleBlocking(for: profileManager.currentProfile)
