@@ -18,7 +18,7 @@ struct ProfileFormView: View {
     @State private var showDeleteConfirmation = false
     let profile: Profile?
     let onDismiss: () -> Void
-    let customIcons = ["defaultTomato", "happyTomato", "nerdTomato", "sleepTomato", "selfcareTomato", "devilishTomato", "deadTomato", "tastyTomato", "hearteyeTomato", "gymTomato"]
+    let customIcons = ["defaultTomato", "happyTomato", "nerdTomato", "sleepTomato", "selfcareTomato", "devilishTomato", "deadTomato", "tastyTomato", "hearteyeTomato", "gymTomato", "moneyTomato", "sunglassTomato"]
     
     init(profile: Profile? = nil, profileManager: ProfileManager, onDismiss: @escaping () -> Void) {
         self.profile = profile
@@ -56,11 +56,17 @@ struct ProfileFormView: View {
                                 .foregroundColor(.secondary)
                         }
                     }
+
                 }
                 
                 Section(header: Text("App Configuration")) {
                     Button(action: { showAppSelection = true }) {
-                        Text("Configure Blocked Apps")
+                        HStack {
+                            Text("Configure Blocked Apps")
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.secondary)
+                        }
                     }
                     
                     VStack(alignment: .leading, spacing: 8) {
