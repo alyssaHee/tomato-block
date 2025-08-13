@@ -18,7 +18,7 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
             backgroundBlurStyle: .systemMaterialDark,
             backgroundColor: UIColor(named: "shieldBg"),
             icon: UIImage(named: "shieldIcon"),
-            title: ShieldConfiguration.Label(text: "Good Things Take Time", color: UIColor(named: "titleColour")!),
+            title: ShieldConfiguration.Label(text: "Good things take time.", color: UIColor(named: "titleColour")!),
             subtitle: ShieldConfiguration.Label(text: "Take a breath, reset. You got this! To access app tap your tomato brick.", color: UIColor(named: "textColour")!),
             primaryButtonLabel: ShieldConfiguration.Label(text: "Focus", color: UIColor(red: 1, green: 1, blue: 1, alpha: 0.7)),
             primaryButtonBackgroundColor: UIColor(red: 0.26, green: 0.23, blue: 0.23, alpha: 0.8)
