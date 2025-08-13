@@ -8,6 +8,7 @@
 	<array>
 		<string>KodeMono-SemiBold.ttf</string>
 		<string>IBMPlexMono-Regular.ttf</string>
+		<string>IBMPlexMono-Medium.ttf</string>
 	</array>
 	<key>UILaunchScreen</key>
 	<dict>

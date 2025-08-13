@@ -15,6 +15,14 @@ extension Font {
     static func IBMPlexMono(fontStyle: Font.TextStyle = .body) -> Font {
         return Font.custom("IBMPlexMono-Regular", size: fontStyle.size)
     }
+    
+    static func IBMPlexMonoSemiBold(fontStyle: Font.TextStyle = .body) -> Font {
+        return Font.custom("IBMPlexMono-SemiBold", size: fontStyle.size)
+    }
+    
+    static func IBMPlexMonoMedium(fontStyle: Font.TextStyle = .body) -> Font {
+        return Font.custom("IBMPlexMono-Medium", size: fontStyle.size)
+    }
 }
 
 extension Font.TextStyle {

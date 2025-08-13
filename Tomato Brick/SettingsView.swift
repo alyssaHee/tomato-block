@@ -26,7 +26,7 @@ struct SettingsView: View {
     @State private var nfcWriteSuccess = false
     
     private var rows: Int {
-        min(Int(ceil(Double(profileManager.profiles.count + 1) / 3.0)), 4)
+        min(Int(ceil(Double(profileManager.profiles.count + 1) / 3.0)), 3)
     }
     
     private var isBlocking : Bool {
@@ -38,60 +38,47 @@ struct SettingsView: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             VStack(alignment: .leading) {
+                
                 Text("Settings")
                     .font(.kodemono(fontStyle: .title))
                     .multilineTextAlignment(.leading)
                     .padding(.top, 40.0)
                     .padding(.horizontal, 40.0)
+                    .foregroundStyle(.primary.opacity(0.85))
                 //.textCase(.uppercase)
                 
-                
-                Text("Modes")
-                    .font(.IBMPlexMono(fontStyle: .title3))
-                    .foregroundColor(Color("settingsTextColour"))
-                    .multilineTextAlignment(.leading)
-                    .padding(.top, 2.0)
-                    .padding(.horizontal, 40.0)
-                
-                
-                ScrollView {
-                    // Lazy grid loads view only when needed, much efficient
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 90), spacing: 10)], spacing: 10) {
-                        ForEach(profileManager.profiles) { profile in
-                            ProfileCell(profile: profile, isSelected: profile.id == profileManager.currentProfileId)
-                                .onTapGesture {
-                                    profileManager.setCurrentProfile(id: profile.id)
-                                }
-                                .onLongPressGesture {
-                                    editingProfile = profile
-                                }
-                        }
-                        
-                        ProfileCellBase(name: "Add mode", icon: "addmodeTomato", isSelected: false, isDashed: true)
-                            .onTapGesture {
-                                showAddProfileView = true
-                            }
-                    }
-                    .padding(.horizontal, 40.0)
-                    .padding(.vertical, 3.0)
+                VStack(alignment: .leading) {
+                    Text("Modes")
+                        .font(.IBMPlexMonoMedium(fontStyle: .title3))
+                        .foregroundColor(Color("settingsTextColour"))
+                        .multilineTextAlignment(.leading)
+                        .padding(.top, 2.0)
+                        .padding(.horizontal, 20.0)
+                    
+                    
+                    modes()
+                    
+                    
+                    Text("Long press on tomato to edit...")
+                        .font(.caption2)
+                        .foregroundColor(Color("blurbColour"))
+                        .padding(.bottom, 8.0)
+                        .padding(.horizontal, 40.0)
+                        .padding(.top, 2.0)
+                        .frame(maxWidth: .infinity, alignment: .center)
                 }
-                .frame(height: CGFloat(rows * 117))
+                .padding(.vertical, 10.0)
+                .background(Color("settingsDivider"))
+                .cornerRadius(12.0)
+                .padding(.horizontal, 25.0)
                 
-                
-                Text("Long press on tomato to edit...")
-                    .font(.caption2)
-                    .foregroundColor(Color("blurbColour"))
-                    .padding(.bottom, 8.0)
-                    .padding(.horizontal, 40.0)
-                    .padding(.top, 4.0)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                
+            
                 Text("Create Tag")
-                    .font(.IBMPlexMono(fontStyle: .title3))
+                    .font(.IBMPlexMonoMedium(fontStyle: .title3))
                     .foregroundColor(Color("settingsTextColour"))
                     .multilineTextAlignment(.leading)
-                    .padding(.top, 10.0)
-                    .padding(.horizontal, 40.0)
+                    .padding(.top, 20.0)
+                    .padding(.horizontal, 45.0)
                 
                 createTagButton()
                     .alert(isPresented: $showWrongTagAlert) {
@@ -116,7 +103,12 @@ struct SettingsView: View {
                 
                 Spacer()
                 
-                
+                 
+                    Text("Made with 🍅 by Alyssa")
+                        .font(.IBMPlexMono(fontStyle: .caption))
+                        .foregroundColor(Color("settingsTextColour").opacity(0.7))
+                        .padding(.bottom, -2.0)
+                        .frame(maxWidth: .infinity, alignment: .center)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
@@ -151,12 +143,39 @@ struct SettingsView: View {
     
     
     @ViewBuilder
+    private func modes() -> some View {
+        ScrollView {
+            // Lazy grid loads view only when needed, much efficient
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 90), spacing: 10)], spacing: 10) {
+                ForEach(profileManager.profiles) { profile in
+                    ProfileCell(profile: profile, isSelected: profile.id == profileManager.currentProfileId)
+                        .onTapGesture {
+                            profileManager.setCurrentProfile(id: profile.id)
+                        }
+                        .onLongPressGesture {
+                            editingProfile = profile
+                        }
+                }
+                
+                ProfileCellBase(name: "Add mode", icon: "addmodeTomato", isSelected: false, isDashed: true)
+                    .onTapGesture {
+                        showAddProfileView = true
+                    }
+            }
+            .padding(.horizontal, 20.0)
+            .padding(.vertical, 3.0)
+        }
+        .frame(height: CGFloat(rows * 118))
+        .padding(.top, -10.0)
+    }
+    
     private func createTagButton() -> some View {
         Button(action: {
             showCreateTagAlert = true
         }) {
             Image("tagTomato")
-                .padding(.horizontal, 50.0)
+                .padding(.horizontal, 55.0)
+                .padding(.top, -2.0)
         }
         .disabled(!NFCNDEFReaderSession.readingAvailable)
     }
