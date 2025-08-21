@@ -1,8 +1,9 @@
 //
 //  SettingsView.swift
-//  Tomato Brick
+//  Tomato Block
 //
-//  Created by Alyssa H on 2025-08-03.
+//  This file is adapted from Oz Tamir's project Broke, licensed under Apache 2.0
+//  Modified by Alyssa Hee on 2025-08-03.
 //
 
 import SwiftUI
@@ -25,8 +26,16 @@ struct SettingsView: View {
     @State private var showCreateTagAlert = false
     @State private var nfcWriteSuccess = false
     
+    private var isPad: Bool {
+            UIDevice.current.userInterfaceIdiom == .pad
+    }
+    
     private var rows: Int {
-        min(Int(ceil(Double(profileManager.profiles.count + 1) / 3.0)), 3)
+        if isPad {
+            min(Int(ceil(Double(profileManager.profiles.count + 1) / 7.0)), 2)
+        } else {
+            min(Int(ceil(Double(profileManager.profiles.count + 1) / 3.0)), 3)
+        }
     }
     
     private var isBlocking : Bool {
@@ -60,11 +69,12 @@ struct SettingsView: View {
                     
                     
                     Text("Long press on tomato to edit...")
-                        .font(.caption2)
+                    .font(.IBMPlexMono(fontStyle: .caption2))
+                        //.font(.caption2)
                         .foregroundColor(Color("blurbColour"))
-                        .padding(.bottom, 8.0)
+                        .padding(.bottom, 6.0)
                         .padding(.horizontal, 40.0)
-                        .padding(.top, 2.0)
+                        .padding(.top, 4.0)
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
                 .padding(.vertical, 10.0)
@@ -208,7 +218,7 @@ struct ProfileCellBase: View {
             
 
         }
-        .frame(width: 90, height: 90)
+        .frame(width: 85, height: 90)
         .padding(10)
         .background(isSelected ? Color.red.opacity(0.1) : Color.clear)
         .cornerRadius(18)

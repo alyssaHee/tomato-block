@@ -1,13 +1,13 @@
 //
-//  Tomato_BrickUITestsLaunchTests.swift
-//  Tomato BrickUITests
+//  Tomato_BlockUITestsLaunchTests.swift
+//  Tomato BlockUITests
 //
-//  Created by Alyssa H on 2025-07-15.
+//  Created by Alyssa Hee on 2025-07-15.
 //
 
 import XCTest
 
-final class Tomato_BrickUITestsLaunchTests: XCTestCase {
+final class Tomato_BlockUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

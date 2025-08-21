@@ -1,14 +1,14 @@
 //
-//  Tomato_BrickApp.swift
-//  Tomato Brick
+//  Tomato_BlockApp.swift
+//  Tomato Block
 //
-//  Created by Alyssa H on 2025-07-15.
+//  Created by Alyssa Hee on 2025-07-15.
 //
 
 import SwiftUI
 
 @main
-struct Tomato_BrickApp: App {
+struct Tomato_BlockApp: App {
     @StateObject private var appBlocker = AppBlocker()
     @StateObject private var profileManager = ProfileManager()
     @StateObject private var tomatoTimer = TomatoTimer()

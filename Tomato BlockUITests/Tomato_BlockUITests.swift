@@ -1,13 +1,13 @@
 //
-//  Tomato_BrickUITests.swift
-//  Tomato BrickUITests
+//  Tomato_BlockUITests.swift
+//  Tomato BlockUITests
 //
-//  Created by Alyssa H on 2025-07-15.
+//  Created by Alyssa Hee on 2025-07-15.
 //
 
 import XCTest
 
-final class Tomato_BrickUITests: XCTestCase {
+final class Tomato_BlockUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

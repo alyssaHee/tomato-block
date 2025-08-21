@@ -1,8 +1,9 @@
 //
 //  ContentView.swift
-//  Tomato Brick
+//  Tomato Block
 //
-//  Created by Alyssa H on 2025-07-15.
+//  This file is adapted from Oz Tamir's project Broke, licensed under Apache 2.0
+//  Modified by Alyssa Hee on 2025-07-15.
 //
 
 import SwiftUI
@@ -32,14 +33,23 @@ struct TomatoView: View {
         }
     }
     
+    private var isPad: Bool {
+        UIDevice.current.userInterfaceIdiom == .pad
+    }
+    
     var body: some View {
         
         NavigationStack {
             ZStack(alignment: .topTrailing) {
                 VStack {
-                    Spacer()
-                        .frame(height: 120.0)
-                    
+                    if isPad {
+                        Spacer()
+                            .frame(height: 200.0)
+                    } else {
+                        Spacer()
+                            .frame(height: 120.0)
+                    }
+
                     Text("Protect Your Energy")
                         .font(.kodemono(fontStyle: .title3))
                         .foregroundStyle(.white.opacity(0.65))
@@ -120,11 +130,20 @@ struct TomatoView: View {
                 scanTag()
             }
         }) {
-            Image(isBlocking ? "blockedTomato" : "\(profileManager.currentProfile.icon)1")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .padding(.horizontal, 40.0)
-                .padding(.bottom, 20.0)
+            if isPad {
+                Image(isBlocking ? "blockedTomato" : "\(profileManager.currentProfile.icon)1")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .padding(.horizontal, 120.0)
+                    .padding(.bottom, 20.0)
+            } else {
+                Image(isBlocking ? "blockedTomato" : "\(profileManager.currentProfile.icon)1")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .padding(.horizontal, 40.0)
+                    .padding(.bottom, 20.0)
+            }
+            
         }
         .transition(.scale)
     }
@@ -139,9 +158,19 @@ struct TomatoView: View {
         }
         nfcReader.scan(modeName: profileManager.currentProfile.name, status: status!) { payload in
             if payload == tagPhrase {
+                
                 NSLog("Toggling block")
                 appBlocker.toggleBlocking(for: profileManager.currentProfile)
-                isBlocking ? timeBlocked.startTimer() : timeBlocked.stopTimer()
+                
+                if isBlocking {
+                    timeBlocked.startTimer()
+                    // let is for immutable variables
+                    let currentSessions: Int = profileManager.currentProfile.totalSessions
+                    profileManager.updateProfile(id: profileManager.currentProfileId!, totalSessions: currentSessions + 1)
+                } else {
+                    timeBlocked.stopTimer()
+                }
+                
             } else {
                 showWrongTagAlert = true
                 NSLog("Wrong Tag!\nPayload: \(payload)")

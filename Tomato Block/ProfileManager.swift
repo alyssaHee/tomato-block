@@ -1,8 +1,9 @@
 //
 //  ProfileManager.swift
-//  Tomato Brick
+//  Tomato Block
 //
-//  Created by Alyssa H on 2025-08-01.
+//  This file is adapted from Oz Tamir's project Broke, licensed under Apache 2.0
+//  Modified by Alyssa Hee on 2025-08-01.
 //
 
 import Foundation
@@ -128,7 +129,8 @@ class ProfileManager: ObservableObject {
         name: String? = nil,
         appTokens: Set<ApplicationToken>? = nil,
         categoryTokens: Set<ActivityCategoryToken>? = nil,
-        icon: String? = nil
+        icon: String? = nil,
+        totalSessions: Int? = nil
     ) {
         if let index = profiles.firstIndex(where: { $0.id == id }) {
             if let name = name {
@@ -146,6 +148,10 @@ class ProfileManager: ObservableObject {
             
             if currentProfileId == id {
                 currentProfileId = profiles[index].id
+            }
+            
+            if let totalSessions = totalSessions {
+                profiles[index].totalSessions = totalSessions
             }
             
             saveProfiles()
@@ -175,6 +181,7 @@ struct Profile: Identifiable, Codable {
     var appTokens: Set<ApplicationToken>
     var categoryTokens: Set<ActivityCategoryToken>
     var icon: String
+    var totalSessions: Int = 0
 
     var isDefault: Bool {
         name == "Default"
@@ -187,5 +194,6 @@ struct Profile: Identifiable, Codable {
         self.appTokens = appTokens
         self.categoryTokens = categoryTokens
         self.icon = icon
+        self.totalSessions = 0
     }
 }

@@ -1,8 +1,9 @@
 //
 //  ProfileView.swift
-//  Tomato Brick
+//  Tomato Block
 //
-//  Created by Alyssa H on 2025-08-02.
+//  This file is adapted from Oz Tamir's project Broke, licensed under Apache 2.0
+//  Modified by Alyssa Hee on 2025-08-02.
 //
 
 import SwiftUI
@@ -49,15 +50,26 @@ struct ProfileFormView: View {
                             Image(profileIcon)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 50, height: 50)
+                                .frame(height: 45)
+                                .padding(.bottom, 2.0)
+                            
                             Text("Choose Icon")
                             Spacer()
                             Image(systemName: "chevron.right")
                                 .foregroundColor(.secondary)
                         }
                     }
+                    
+                    HStack {
+                        Text("Total Sessions: ")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                        Text("\(profileManager.currentProfile.totalSessions)")
+                    }
 
                 }
+                
                 
                 Section(header: Text("App Configuration")) {
                     Button(action: { showAppSelection = true }) {

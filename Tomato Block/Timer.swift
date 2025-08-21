@@ -1,8 +1,8 @@
 //
 //  Timer.swift
-//  Tomato Brick
+//  Tomato Block
 //
-//  Created by Alyssa H on 2025-08-07.
+//  Created by Alyssa Hee on 2025-08-07.
 //
 
 import SwiftUI

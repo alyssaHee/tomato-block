@@ -1,8 +1,9 @@
 //
 //  AppBlocker.swift
-//  Tomato Brick
+//  Tomato Block
 //
-//  Created by Alyssa H on 2025-08-01.
+//  This file is adapted from Oz Tamir's project Broke, licensed under Apache 2.0
+//  Modified by Alyssa Hee on 2025-08-01.
 //
 
 import SwiftUI
@@ -54,7 +55,7 @@ class AppBlocker: ObservableObject {
     
     func toggleBlocking(for profile: Profile) {
         guard isAuthorized else {
-            print("Tomato Brick isn't authorized to block apps")
+            print("Tomato Block isn't authorized to block apps")
             return
         }
         
