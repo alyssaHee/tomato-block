@@ -164,6 +164,7 @@ struct SettingsView: View {
                         }
                         .onLongPressGesture {
                             editingProfile = profile
+                            profileManager.setCurrentProfile(id: profile.id)
                         }
                 }
                 
