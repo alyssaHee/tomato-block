@@ -91,9 +91,9 @@ struct TomatoView: View {
                 
                 if !isBlocking {
                     Button(action: {
-                        //withAnimation {
+                        withAnimation {
                             showSettings = true
-                        //}
+                        }
                     })
                     {
                         Image(systemName: "gearshape.fill")
@@ -108,11 +108,14 @@ struct TomatoView: View {
                     
                 if showSettings {
                     SettingsView(profileManager: profileManager, dismiss: {
-                        //withAnimation {
+                        withAnimation {
                             showSettings = false
-                        //}
+                        }
                     })
-                    //.transition(.identity)
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .trailing),
+                        removal: .move(edge: .trailing)
+                    ))
                     .zIndex(1) // On top
                 }
             }
@@ -127,7 +130,7 @@ struct TomatoView: View {
         // tomato
         Button(action: {
             withAnimation(.spring()) {
-                scanTag()
+                scanTag(method: profileManager.currentProfile.methodSelected)
             }
         }) {
             if isPad {
@@ -149,31 +152,45 @@ struct TomatoView: View {
     }
 
     
-    private func scanTag() {
-        var status: String?
-        if isBlocking {
-            status = "stop"
-        } else {
-            status = "start"
-        }
-        nfcReader.scan(modeName: profileManager.currentProfile.name, status: status!) { payload in
-            if payload == tagPhrase {
-                
-                NSLog("Toggling block")
-                appBlocker.toggleBlocking(for: profileManager.currentProfile)
-                
-                if isBlocking {
-                    timeBlocked.startTimer()
-                    // let is for immutable variables
-                    let currentSessions: Int = profileManager.currentProfile.totalSessions
-                    profileManager.updateProfile(id: profileManager.currentProfileId!, totalSessions: currentSessions + 1)
-                } else {
-                    timeBlocked.stopTimer()
-                }
-                
+    private func scanTag(method: String) {
+        if method == "Manual" {
+            NSLog("Toggling manual block")
+            appBlocker.toggleBlocking(for: profileManager.currentProfile)
+            
+            if isBlocking {
+                timeBlocked.startTimer()
+                // let is for immutable variables
+                let currentSessions: Int = profileManager.currentProfile.totalSessions
+                profileManager.updateProfile(id: profileManager.currentProfileId!, totalSessions: currentSessions + 1)
             } else {
-                showWrongTagAlert = true
-                NSLog("Wrong Tag!\nPayload: \(payload)")
+                timeBlocked.stopTimer()
+            }
+        } else if method == "NFC" {
+            var status: String?
+            if isBlocking {
+                status = "stop"
+            } else {
+                status = "start"
+            }
+            nfcReader.scan(modeName: profileManager.currentProfile.name, status: status!) { payload in
+                if payload == tagPhrase {
+                    
+                    NSLog("Toggling block")
+                    appBlocker.toggleBlocking(for: profileManager.currentProfile)
+                    
+                    if isBlocking {
+                        timeBlocked.startTimer()
+                        // let is for immutable variables
+                        let currentSessions: Int = profileManager.currentProfile.totalSessions
+                        profileManager.updateProfile(id: profileManager.currentProfileId!, totalSessions: currentSessions + 1)
+                    } else {
+                        timeBlocked.stopTimer()
+                    }
+                    
+                } else {
+                    showWrongTagAlert = true
+                    NSLog("Wrong Tag!\nPayload: \(payload)")
+                }
             }
         }
     }

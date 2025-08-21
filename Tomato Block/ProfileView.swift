@@ -98,34 +98,62 @@ struct ProfileFormView: View {
                 }
                 
                 Section(header: Text("Block Method")) {
-                    HStack {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Tomato Tag (NFC)")
-                            Text("Requires device with NFC capabilities")
-                                .foregroundColor(.secondary)
-                                .font(.caption)
+                    Button(action: {
+                        profileManager.updateProfile(id: profileManager.currentProfileId!, methodSelected: "NFC")
+                        NSLog("NFC selected")
+                        NSLog("\(profileManager.currentProfile.methodSelected)")
+                    }){
+                        HStack {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Tomato Tag (NFC)")
+                                    .foregroundColor(.primary)
+                                Text("Requires device with NFC capabilities")
+                                    .foregroundColor(.secondary)
+                                    .font(.caption)
+                            }
+                            Spacer()
+                            
+                            if profileManager.currentProfile.methodSelected == "NFC" {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.system(size: 24))
+                                    .foregroundColor(.blue)
+                            } else {
+                                Image(systemName: "circle")
+                                    .font(.system(size: 24))
+                                    .foregroundColor(.secondary)
+                            }
+                            
                         }
-                        Spacer()
-                        
-                        Image(systemName: "heart.circle.fill")
-                            .font(.system(size: 24))
-                            .foregroundColor(.red)
                     }
-                    HStack {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Manual")
-                            Text("Block/unblock directly through app")
-                                .foregroundColor(.secondary)
-                                .font(.caption)
+                    
+                    Button(action: {
+                        profileManager.updateProfile(id: profileManager.currentProfileId!, methodSelected: "Manual")
+                        NSLog("Manual selected")
+                        NSLog("\(profileManager.currentProfile.methodSelected)")
+                    }){
+                        HStack {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Manual")
+                                    .foregroundColor(.primary)
+                                Text("Block/unblock directly through app")
+                                    .foregroundColor(.secondary)
+                                    .font(.caption)
+                            }
+                            Spacer()
+                            
+                            if profileManager.currentProfile.methodSelected == "Manual" {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.system(size: 24))
+                                    .foregroundColor(.blue)
+                            } else {
+                                Image(systemName: "circle")
+                                    .font(.system(size: 24))
+                                    .foregroundColor(.secondary)
+                            }
+                            
                         }
-                        Spacer()
-                        
-                        Image(systemName: "circle")
-                            .font(.system(size: 24))
-                            .foregroundColor(.secondary)
-                        //Image(systemName: methodSelected ? "heart.circle" : "circle")
-                            //.font(.system(size: 20))
                     }
+                    
                 }
                 
                 if (profile != nil && profileManager.profiles.count > 1){

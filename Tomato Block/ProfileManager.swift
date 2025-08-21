@@ -130,7 +130,8 @@ class ProfileManager: ObservableObject {
         appTokens: Set<ApplicationToken>? = nil,
         categoryTokens: Set<ActivityCategoryToken>? = nil,
         icon: String? = nil,
-        totalSessions: Int? = nil
+        totalSessions: Int? = nil,
+        methodSelected: String? = nil
     ) {
         if let index = profiles.firstIndex(where: { $0.id == id }) {
             if let name = name {
@@ -152,6 +153,10 @@ class ProfileManager: ObservableObject {
             
             if let totalSessions = totalSessions {
                 profiles[index].totalSessions = totalSessions
+            }
+            
+            if let methodSelected = methodSelected {
+                profiles[index].methodSelected = methodSelected
             }
             
             saveProfiles()
@@ -182,6 +187,7 @@ struct Profile: Identifiable, Codable {
     var categoryTokens: Set<ActivityCategoryToken>
     var icon: String
     var totalSessions: Int = 0
+    var methodSelected: String
 
     var isDefault: Bool {
         name == "Default"
@@ -195,5 +201,6 @@ struct Profile: Identifiable, Codable {
         self.categoryTokens = categoryTokens
         self.icon = icon
         self.totalSessions = 0
+        self.methodSelected = "NFC"
     }
 }
