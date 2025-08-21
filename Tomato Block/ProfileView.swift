@@ -61,7 +61,7 @@ struct ProfileFormView: View {
                     }
                     
                     HStack {
-                        Text("Total Sessions: ")
+                        Text("Total Block Sessions: ")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                         Spacer()
@@ -94,6 +94,37 @@ struct ProfileFormView: View {
                             Text("\(activitySelection.categoryTokens.count)")
                                 .fontWeight(.bold)
                         }
+                    }
+                }
+                
+                Section(header: Text("Block Method")) {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Tomato Tag (NFC)")
+                            Text("Requires device with NFC capabilities")
+                                .foregroundColor(.secondary)
+                                .font(.caption)
+                        }
+                        Spacer()
+                        
+                        Image(systemName: "heart.circle.fill")
+                            .font(.system(size: 24))
+                            .foregroundColor(.red)
+                    }
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Manual")
+                            Text("Block/unblock directly through app")
+                                .foregroundColor(.secondary)
+                                .font(.caption)
+                        }
+                        Spacer()
+                        
+                        Image(systemName: "circle")
+                            .font(.system(size: 24))
+                            .foregroundColor(.secondary)
+                        //Image(systemName: methodSelected ? "heart.circle" : "circle")
+                            //.font(.system(size: 20))
                     }
                 }
                 
