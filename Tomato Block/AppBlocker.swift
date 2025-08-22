@@ -77,10 +77,4 @@ class AppBlocker: ObservableObject {
             store.shield.applicationCategories = ShieldSettings.ActivityCategoryPolicy.none
         }
     }
-    
-    
-    
-    
-    
-    
 }

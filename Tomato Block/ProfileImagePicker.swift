@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// For selecting mode icon
 struct CustomImagePicker: View {
     @Binding var selection: String
     let title: String
