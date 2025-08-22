@@ -146,6 +146,16 @@ struct SettingsView: View {
             
         }
         .background(Color("settingsBg"))
+        .gesture (
+            DragGesture()
+                .onEnded { value in
+                    if value.translation.width > 50 {
+                        withAnimation(.interactiveSpring()) {
+                            dismiss()
+                        }
+                    }
+                }
+        )
         .animation(.spring(), value: isBlocking)
         
     }

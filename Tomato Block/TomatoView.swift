@@ -87,6 +87,17 @@ struct TomatoView: View {
                 }
                 .padding(.horizontal, 24.0)
                 .background(isBlocking ? Color("blockedBg") : Color("unblockedBg"))
+                /*.gesture (
+                    DragGesture()
+                        .onEnded { value in
+                            if value.translation.width < -80 {
+                                withAnimation(.interactiveSpring()) {
+                                    showSettings = true
+                                }
+                            }
+                        }
+                )
+                 */
                 .animation(.spring(), value: isBlocking)
                 
                 if !isBlocking {
