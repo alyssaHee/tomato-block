@@ -17,7 +17,8 @@ struct ProfileFormView: View {
     @State private var showAppSelection = false
     @State private var activitySelection: FamilyActivitySelection
     @State private var showDeleteConfirmation = false
-    @State private var wasSelected = false
+    @State private var nfcSelected: Bool = true
+
     let profile: Profile?
     let onDismiss: () -> Void
     let customIcons = ["defaultTomato", "happyTomato", "nerdTomato", "sleepTomato", "selfcareTomato", "devilishTomato", "deadTomato", "tastyTomato", "hearteyeTomato", "gymTomato", "moneyTomato", "sunglassTomato"]
@@ -34,8 +35,11 @@ struct ProfileFormView: View {
         selection.categoryTokens = profile?.categoryTokens ?? []
         _activitySelection = State(initialValue: selection)
         
-        if(profile == nil) {
-            wasSelected = false
+        if profile != nil {
+                let method = profileManager.currentProfile.methodSelected
+                _nfcSelected = State(initialValue: method == "NFC")
+        } else {
+            _nfcSelected = State(initialValue: true)
         }
     }
     
@@ -104,10 +108,8 @@ struct ProfileFormView: View {
                 
                 Section(header: Text("Block Method")) {
                     Button(action: {
-                        profileManager.updateProfile(id: profileManager.currentProfileId!, methodSelected: "NFC")
-                        wasSelected = true
+                        nfcSelected = true
                         NSLog("NFC selected")
-                        NSLog("\(profileManager.currentProfile.methodSelected)")
                     }){
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
@@ -119,24 +121,16 @@ struct ProfileFormView: View {
                             }
                             Spacer()
                             
-                            if profileManager.currentProfile.methodSelected == "NFC" || (profile == nil && !wasSelected) {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .font(.system(size: 24))
-                                    .foregroundColor(.blue)
-                            } else {
-                                Image(systemName: "circle")
-                                    .font(.system(size: 24))
-                                    .foregroundColor(.secondary)
-                            }
+                            Image(systemName: nfcSelected ? "checkmark.circle.fill" : "circle")
+                                .foregroundColor(nfcSelected ? .blue : .secondary)
+                                .font(.system(size: 24))
                             
                         }
                     }
                     
                     Button(action: {
-                        profileManager.updateProfile(id: profileManager.currentProfileId!, methodSelected: "Manual")
-                        wasSelected = true
+                        nfcSelected = false
                         NSLog("Manual selected")
-                        NSLog("\(profileManager.currentProfile.methodSelected)")
                     }){
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
@@ -148,21 +142,9 @@ struct ProfileFormView: View {
                             }
                             Spacer()
                             
-                            if profileManager.currentProfile.methodSelected == "Manual" {
-                                if profile == nil && !wasSelected {
-                                    Image(systemName: "circle")
-                                        .font(.system(size: 24))
-                                        .foregroundColor(.secondary)
-                                } else {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .font(.system(size: 24))
-                                        .foregroundColor(.blue)
-                                }
-                            } else {
-                                Image(systemName: "circle")
-                                    .font(.system(size: 24))
-                                    .foregroundColor(.secondary)
-                            }
+                            Image(systemName: !nfcSelected ? "checkmark.circle.fill" : "circle")
+                                .foregroundColor(!nfcSelected ? .blue : .secondary)
+                                .font(.system(size: 24))
                             
                         }
                     }
@@ -220,14 +202,16 @@ struct ProfileFormView: View {
                 name: profileName,
                 appTokens: activitySelection.applicationTokens,
                 categoryTokens: activitySelection.categoryTokens,
-                icon: profileIcon
+                icon: profileIcon,
+                methodSelected: nfcSelected ? "NFC" : "Manual"
             )
         } else {
             let newProfile = Profile(
                 name: profileName,
                 appTokens: activitySelection.applicationTokens,
                 categoryTokens: activitySelection.categoryTokens,
-                icon: profileIcon
+                icon: profileIcon,
+                methodSelected: nfcSelected ? "NFC" : "Manual"
             )
             profileManager.addProfile(newProfile: newProfile)
         }

@@ -30,7 +30,7 @@ class ProfileManager: ObservableObject {
             profiles = decodedProfiles
         } else {
             // Create default if no saved profiles
-            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "defaultTomato")
+            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "defaultTomato", methodSelected: "NFC")
             profiles = [defaultProfile]
             currentProfileId = defaultProfile.id
         }
@@ -54,8 +54,8 @@ class ProfileManager: ObservableObject {
     }
     
     
-    func addProfile(name: String, icon: String = "defaultTomato") {
-        let newProfile = Profile(name: name, appTokens: [], categoryTokens: [], icon: icon)
+    func addProfile(name: String, icon: String = "defaultTomato", totalSessions: Int, methodSelected: String) {
+        let newProfile = Profile(name: name, appTokens: [], categoryTokens: [], icon: icon, methodSelected: methodSelected)
         profiles.append(newProfile)
         currentProfileId = newProfile.id
         saveProfiles()
@@ -165,7 +165,7 @@ class ProfileManager: ObservableObject {
     
     private func ensureDefaultProfile() {
         if profiles.isEmpty {
-            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "defaultTomato")
+            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "defaultTomato", methodSelected: "NFC")
             profiles.append(defaultProfile)
             currentProfileId = defaultProfile.id
             saveProfiles()
@@ -194,13 +194,13 @@ struct Profile: Identifiable, Codable {
     }
 
     // New initializer to support default icon
-    init(name: String, appTokens: Set<ApplicationToken>, categoryTokens: Set<ActivityCategoryToken>, icon: String = "defaultTomato") {
+    init(name: String, appTokens: Set<ApplicationToken>, categoryTokens: Set<ActivityCategoryToken>, icon: String = "defaultTomato", methodSelected: String) {
         self.id = UUID()
         self.name = name
         self.appTokens = appTokens
         self.categoryTokens = categoryTokens
         self.icon = icon
         self.totalSessions = 0
-        self.methodSelected = "NFC"
+        self.methodSelected = methodSelected
     }
 }
