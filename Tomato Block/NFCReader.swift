@@ -7,6 +7,7 @@
 //
 
 import CoreNFC
+import UIKit
 
 class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
     @Published var message = "Waiting for Tomato..."
@@ -32,6 +33,7 @@ class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
     private func startSession(modeName: String? = nil, status: String? = nil) {
         guard NFCNDEFReaderSession.readingAvailable else {
             NSLog("NFC is not available on this device")
+            showNFCNotAvailableAlert()
             return
         }
         
@@ -204,6 +206,36 @@ class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
     
     func readerSessionDidBecomeActive(_ session: NFCNDEFReaderSession) {
         NSLog("NFC session became active")
+    }
+    
+    // Alert for when NFC not available on device (e.g. iPad)
+    private func getTopMostViewController() -> UIViewController? {
+        guard let windowScene = UIApplication.shared.connectedScenes
+            .filter({ $0.activationState == .foregroundActive })
+            .first as? UIWindowScene,
+            let keyWindow = windowScene.windows.first(where: { $0.isKeyWindow }),
+            let rootVC = keyWindow.rootViewController else {
+            return nil
+        }
+
+        return rootVC.topMostViewController()
+    }
+    
+    private func showNFCNotAvailableAlert() {
+        guard let topVC = getTopMostViewController() else {
+            return
+        }
+
+        let alert = UIAlertController(
+            title: "NFC Not Available",
+            message: "Your device doesn't support NFC or it is currently unavailable. If you are on an iPad, select Manual mode in Settings to toggle blocking.",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+
+        DispatchQueue.main.async {
+            topVC.present(alert, animated: true)
+        }
     }
     
 }
