@@ -17,6 +17,7 @@ struct ProfileFormView: View {
     @State private var showAppSelection = false
     @State private var activitySelection: FamilyActivitySelection
     @State private var showDeleteConfirmation = false
+    @State private var wasSelected = false
     let profile: Profile?
     let onDismiss: () -> Void
     let customIcons = ["defaultTomato", "happyTomato", "nerdTomato", "sleepTomato", "selfcareTomato", "devilishTomato", "deadTomato", "tastyTomato", "hearteyeTomato", "gymTomato", "moneyTomato", "sunglassTomato"]
@@ -32,6 +33,10 @@ struct ProfileFormView: View {
         selection.applicationTokens = profile?.appTokens ?? []
         selection.categoryTokens = profile?.categoryTokens ?? []
         _activitySelection = State(initialValue: selection)
+        
+        if(profile == nil) {
+            wasSelected = false
+        }
     }
     
     var body: some View {
@@ -65,7 +70,7 @@ struct ProfileFormView: View {
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                         Spacer()
-                        Text("\(profileManager.currentProfile.totalSessions)")
+                        profile == nil ? Text("0") : Text("\(profileManager.currentProfile.totalSessions)")
                     }
 
                 }
@@ -100,6 +105,7 @@ struct ProfileFormView: View {
                 Section(header: Text("Block Method")) {
                     Button(action: {
                         profileManager.updateProfile(id: profileManager.currentProfileId!, methodSelected: "NFC")
+                        wasSelected = true
                         NSLog("NFC selected")
                         NSLog("\(profileManager.currentProfile.methodSelected)")
                     }){
@@ -113,7 +119,7 @@ struct ProfileFormView: View {
                             }
                             Spacer()
                             
-                            if profileManager.currentProfile.methodSelected == "NFC" {
+                            if profileManager.currentProfile.methodSelected == "NFC" || (profile == nil && !wasSelected) {
                                 Image(systemName: "checkmark.circle.fill")
                                     .font(.system(size: 24))
                                     .foregroundColor(.blue)
@@ -128,6 +134,7 @@ struct ProfileFormView: View {
                     
                     Button(action: {
                         profileManager.updateProfile(id: profileManager.currentProfileId!, methodSelected: "Manual")
+                        wasSelected = true
                         NSLog("Manual selected")
                         NSLog("\(profileManager.currentProfile.methodSelected)")
                     }){
@@ -142,9 +149,15 @@ struct ProfileFormView: View {
                             Spacer()
                             
                             if profileManager.currentProfile.methodSelected == "Manual" {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .font(.system(size: 24))
-                                    .foregroundColor(.blue)
+                                if profile == nil && !wasSelected {
+                                    Image(systemName: "circle")
+                                        .font(.system(size: 24))
+                                        .foregroundColor(.secondary)
+                                } else {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .font(.system(size: 24))
+                                        .foregroundColor(.blue)
+                                }
                             } else {
                                 Image(systemName: "circle")
                                     .font(.system(size: 24))
